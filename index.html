@@ -1,128 +1,140 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#30204f">
-  <meta name="description" content="Una invitación mágica a los XV años de Rocío Yazmin Ojeda Goffi.">
-  <title>Mis XV · Rocío Yazmin Ojeda Goffi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3b2466">
+<title>Mis XV · Rocío Yazmin Ojeda Goffi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <button class="music-float" id="musicToggle" aria-label="Reproducir música" title="Reproducir música">
-    <span class="music-orbit">♪</span><span class="music-label">Música</span>
-  </button>
-  <audio id="backgroundMusic" loop preload="none">
-    <!-- Reemplazar musica.mp3 por la canción elegida y colocar el archivo en la carpeta assets -->
-    <source src="assets/musica.mp3" type="audio/mpeg">
-  </audio>
-  <button class="song-float" id="songSuggestOpen" aria-label="Sugerir una canción">♫ <span>Sugerir canción</span></button>
-  <div class="song-modal" id="songModal" aria-hidden="true"><div class="song-card" role="dialog" aria-modal="true" aria-labelledby="songTitle">
-    <button class="song-close" id="songSuggestClose" aria-label="Cerrar">×</button><div class="sun-emblem small" aria-hidden="true">✹</div>
-    <p class="eyebrow">La banda sonora de esta noche</p><h2 id="songTitle">¿Qué canción sugerís?</h2><p>Dejanos el nombre de una canción y el artista.</p>
-    <form id="songForm"><label for="songName">Canción y artista</label><input id="songName" name="songName" placeholder="Ej. canción · artista" required><button class="button button-purple" type="submit">Enviar sugerencia ↗</button></form>
-    <p class="tiny-note" id="songNote">La sugerencia se enviará por WhatsApp cuando configuremos el número.</p></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="sun" viewBox="0 0 100 100"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="50" cy="50" r="15"/><circle cx="50" cy="50" r="23" stroke-width="1.5"/><path d="M50 6v16M50 78v16M6 50h16M78 50h16M19 19l11 11M70 70l11 11M81 19L70 30M30 70L19 81"/></g></symbol>
+<symbol id="fl" viewBox="0 0 100 100"><g fill="currentColor"><ellipse cx="50" cy="26" rx="12" ry="20"/><ellipse cx="50" cy="26" rx="12" ry="20" transform="rotate(72 50 50)"/><ellipse cx="50" cy="26" rx="12" ry="20" transform="rotate(144 50 50)"/><ellipse cx="50" cy="26" rx="12" ry="20" transform="rotate(216 50 50)"/><ellipse cx="50" cy="26" rx="12" ry="20" transform="rotate(288 50 50)"/></g><circle cx="50" cy="50" r="8" fill="#e6c98b"/></symbol>
+<symbol id="note" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3v11.2A3.5 3.5 0 1 0 11 17V8h6v6.2A3.5 3.5 0 1 0 19 17V3z"/></symbol>
+</svg>
 
-  <nav class="top-nav" aria-label="Navegación principal">
-    <a href="#inicio" class="brand-mark" aria-label="Ir al inicio">✧ R ✧</a>
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Abrir menú">☰</button>
-    <div class="nav-links" id="navLinks">
-      <a href="#historia">La invitación</a><a href="#galeria">Galería</a><a href="#detalles">Detalles</a><a href="#confirmacion">Confirmación</a>
+<button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+<nav class="menu" id="menu" aria-label="Principal">
+  <a href="#inicio">Inicio</a><a href="#historia">La invitación</a><a href="#galeria">Galería</a><a href="#detalles">Información</a><a href="#confirmacion">Confirmar asistencia</a><a href="#musica">Música</a>
+</nav>
+<button class="music-fab" id="musicToggle" aria-label="Reproducir música"><svg><use href="#note"/></svg></button>
+<audio id="bgMusic" loop preload="none"><source src="assets/musica.mp3" type="audio/mpeg"></audio>
+
+<main>
+<section class="night hero" id="inicio" data-sky="16">
+  <div class="inner">
+    <svg class="sun"><use href="#sun"/></svg>
+    <p class="serif">Mis XV Años</p>
+    <h1 class="script gold">Rocío Yazmin</h1>
+    <p class="serif big">Ojeda Goffi</p>
+    <p class="orn">❧ ✧ ❧</p>
+  </div>
+  <a class="chev" href="#historia" aria-label="Bajar">⌄</a>
+</section>
+
+<section class="paper" id="historia">
+  <svg class="sun dark"><use href="#sun"/></svg>
+  <p class="serif lead">Hay momentos que<br>se convierten en sueños…<br>y este es uno de ellos.</p>
+  <p class="orn">❧ ✧ ❧</p>
+  <p class="serif">Mis XV Años</p>
+  <h2 class="script purple">Rocío Yazmin</h2>
+  <p class="serif big">Ojeda Goffi</p>
+  <p class="orn">❧ ✧ ❧</p>
+  <p class="falta">FALTAN</p>
+  <div class="count" aria-label="Cuenta regresiva">
+    <div><b id="days">0</b><span>Días</span></div><div><b id="hours">00</b><span>Horas</span></div><div><b id="minutes">00</b><span>Minutos</span></div><div><b id="seconds">00</b><span>Segundos</span></div>
+  </div>
+  <img class="pascal" src="assets/pascal.svg" alt="Camaleón verde">
+  <a class="chev dark" href="#galeria" aria-label="Bajar">⌄</a>
+</section>
+
+<section class="paper" id="galeria">
+  <svg class="sun dark"><use href="#sun"/></svg>
+  <h2 class="script purple">Galería</h2>
+  <p class="serif">Nuestra historia en imágenes</p>
+  <div class="gal">
+    <button class="arr l" id="prev" aria-label="Anterior">‹</button>
+    <div class="stack" id="stack">
+      <figure class="ph"><img src="assets/galeria-1.jpg" alt="Foto 1" onerror="this.remove()"></figure>
+      <figure class="ph"><img src="assets/galeria-2.jpg" alt="Foto 2" onerror="this.remove()"></figure>
+      <figure class="ph"><img src="assets/galeria-3.jpg" alt="Foto 3" onerror="this.remove()"></figure>
+      <figure class="ph"><img src="assets/galeria-4.jpg" alt="Foto 4" onerror="this.remove()"></figure>
+      <figure class="ph"><img src="assets/galeria-5.jpg" alt="Foto 5" onerror="this.remove()"></figure>
     </div>
-  </nav>
+    <button class="arr r" id="next" aria-label="Siguiente">›</button>
+  </div>
+</section>
 
-  <main>
-    <section class="hero" id="inicio">
-      <div class="hero-shade"></div>
-      <div class="lantern lantern-one">✦</div><div class="lantern lantern-two">✧</div><div class="lantern lantern-three">✦</div>
-      <div class="hero-content reveal">
-        <div class="sun-emblem" aria-label="Emblema solar de cuento">✹</div><div class="crown">♕</div>
-        <p class="eyebrow">Una noche de cuento · Mis</p>
-        <h1>XV Años</h1>
-        <p class="name-script">Rocío Yazmin</p>
-        <p class="surname">OJEDA GOFFI</p>
-        <div class="ornament">❧ ✧ ❧</div>
-        <p class="hero-date">19 · DICIEMBRE · 2026</p>
-        <a class="button button-gold" href="#historia">Descubrí la invitación <span>↓</span></a>
-      </div>
-      <div class="scroll-cue">DESLIZÁ PARA DESCUBRIR <span>⌄</span></div>
-    </section>
+<section class="paper" id="detalles">
+  <svg class="sun dark"><use href="#sun"/></svg>
+  <h2 class="script purple">Información de la Fiesta</h2>
+  <p class="orn">❧ ✧ ❧</p>
+  <ul class="info">
+    <li><i>▦</i><div><b>Fecha</b><span>19 de diciembre de 2026</span></div></li>
+    <li><i>◷</i><div><b>Horario</b><span>A confirmar</span></div></li>
+    <li><i>⌂</i><div><b>Salón</b><span>A confirmar</span></div></li>
+    <li><i>⌖</i><div><b>Ubicación</b><span>A confirmar</span></div></li>
+    <li><i>♧</i><div><b>Vestimenta</b><span>Elegante / Formal</span></div></li>
+    <li><i>♡</i><div><b>Regalos</b><span>Tu presencia es el mejor regalo</span></div></li>
+  </ul>
+  <div class="btns">
+    <a class="btn fill" href="#confirmacion">Confirmar asistencia</a>
+    <a class="btn line" id="calBtn" href="#" target="_blank" rel="noopener">Agregar al calendario</a>
+    <button class="btn line" data-song>Sugerir canción</button>
+  </div>
+</section>
 
-    <section class="intro section" id="historia">
-      <div class="section-flower">✿</div>
-      <p class="eyebrow">Hay momentos que brillan para siempre</p>
-      <h2>Un sueño que se vuelve realidad</h2>
-      <p class="intro-copy">Hay noches que se guardan en el corazón para toda la vida. Me encantaría compartir con vos una de las más especiales: ¡mis XV años!</p>
-      <div class="signature">Rocío</div>
-      <p class="small-caps">19 DE DICIEMBRE DE 2026</p>
-      <div class="countdown" aria-label="Cuenta regresiva">
-        <div><strong id="days">000</strong><span>Días</span></div>
-        <div><strong id="hours">00</strong><span>Horas</span></div>
-        <div><strong id="minutes">00</strong><span>Minutos</span></div>
-        <div><strong id="seconds">00</strong><span>Segundos</span></div>
-      </div>
-      <p class="tiny-note">La cuenta regresiva ya está preparada para la gran noche ✨</p>
-    </section>
+<section class="paper" id="confirmacion">
+  <svg class="sun dark"><use href="#sun"/></svg>
+  <h2 class="script purple">Confirmá tu asistencia</h2>
+  <p class="orn">❧ ✧ ❧</p>
+  <p class="serif lead">¡Nos encantaría que seas parte<br>de este día tan especial!</p>
+  <form id="rsvpForm">
+    <input name="guestName" placeholder="Nombre y apellido" aria-label="Nombre y apellido" required>
+    <select name="guestCount" aria-label="Cantidad de personas" required><option value="">Cantidad de personas</option><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 o más personas</option></select>
+    <select name="attendance" aria-label="¿Podés asistir?" required><option value="">¿Podés asistir?</option><option>Sí, ¡allí estaré!</option><option>Esta vez no podré asistir</option></select>
+    <textarea name="guestMessage" rows="3" placeholder="Mensaje (opcional)" aria-label="Mensaje"></textarea>
+    <button class="btn fill" type="submit">Enviar</button>
+  </form>
+  <p class="note" id="formNote"></p>
+</section>
 
-    <section class="gallery-section section" id="galeria">
-      <p class="eyebrow">Pequeños momentos, grandes recuerdos</p>
-      <h2>Mi galería</h2>
-      <p class="section-lead">Estas imágenes son solo ejemplos. Más adelante las vamos a reemplazar por las fotos de Rocío.</p>
-      <div class="gallery-grid">
-        <figure class="gallery-card tall"><img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=900&q=85" alt="Cielo violeta de fantasía, imagen de muestra"><figcaption>Un sueño por descubrir</figcaption></figure>
-        <figure class="gallery-card"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85" alt="Atardecer dorado, imagen de muestra"><figcaption>Una luz especial</figcaption></figure>
-        <figure class="gallery-card"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85" alt="Flores delicadas, imagen de muestra"><figcaption>Flores y magia</figcaption></figure>
-        <figure class="gallery-card wide"><img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=85" alt="Paisaje sereno, imagen de muestra"><figcaption>Recuerdos que recién empiezan</figcaption></figure>
-      </div>
-    </section>
+<section class="paper" id="musica">
+  <svg class="sun dark"><use href="#sun"/></svg>
+  <h2 class="script purple">Nuestra Música</h2>
+  <p class="serif">La banda sonora de este gran día</p>
+  <div class="wreath"><div><svg><use href="#note"/></svg></div></div>
+  <p class="serif lead">Por ahora, esta sección<br>estará en blanco…<br>¡Muy pronto agregaremos<br>nuestra lista de canciones!</p>
+  <button class="btn fill" data-song>Sugerir canción</button>
+  <img class="pascal" src="assets/pascal.svg" alt="Camaleón verde">
+</section>
 
-    <section class="details section" id="detalles">
-      <div class="details-inner">
-        <p class="eyebrow">Guardá la fecha</p>
-        <h2>La magia nos espera</h2>
-        <div class="detail-line"><span class="detail-icon">✧</span><div><label>FECHA</label><p>Sábado 19 de diciembre de 2026</p></div></div>
-        <div class="detail-line"><span class="detail-icon">◷</span><div><label>HORARIO</label><p>A confirmar</p></div></div>
-        <div class="detail-line"><span class="detail-icon">⌖</span><div><label>LUGAR</label><p>Salón y dirección a confirmar</p></div></div>
-        <div class="detail-line"><span class="detail-icon">♧</span><div><label>VESTIMENTA</label><p>Elegante / formal</p></div></div>
-        <div class="detail-line"><span class="detail-icon">♡</span><div><label>REGALOS</label><p>Tu presencia es el mejor regalo.</p></div></div>
-        <p class="details-note">Los datos pendientes se pueden completar editando el archivo <code>script.js</code> y el texto de esta sección.</p>
-      </div>
-    </section>
+<section class="night tower" id="cierre" data-sky="22">
+  <div class="inner">
+    <svg class="sun"><use href="#sun"/></svg>
+    <p class="serif lead">Lo más lindo<br>de la vida, no es lo que<br>se ve, sino lo que se siente.</p>
+    <p class="serif lead">Gracias por ser parte<br>de este momento tan especial…</p>
+  </div>
+  <div class="foot"><h2 class="script gold">Rocío Yazmin</h2><p class="serif big">Ojeda Goffi</p><p class="gold">♥</p></div>
+</section>
 
-    <section class="rsvp section" id="confirmacion">
-      <div class="section-flower">✿</div>
-      <p class="eyebrow">Quiero compartirlo con vos</p>
-      <h2>¿Me acompañás?</h2>
-      <p class="section-lead">Confirmá tu asistencia por WhatsApp. El número se configura cuando esté listo.</p>
-      <form id="rsvpForm">
-        <label for="guestName">Nombre y apellido</label>
-        <input id="guestName" name="guestName" placeholder="Tu nombre completo" required>
-        <label for="guestCount">¿Cuántas personas asistirán?</label>
-        <select id="guestCount" name="guestCount" required><option value="">Elegí una opción</option><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 o más personas</option></select>
-        <label for="attendance">¿Vas a poder venir?</label>
-        <select id="attendance" name="attendance" required><option value="">Seleccioná una respuesta</option><option>Sí, ¡allí estaré!</option><option>Esta vez no podré asistir</option></select>
-        <label for="guestMessage">Mensaje (opcional)</label>
-        <textarea id="guestMessage" name="guestMessage" rows="3" placeholder="Dejame un mensajito..."></textarea>
-        <button class="button button-purple" type="submit">Confirmar por WhatsApp <span>↗</span></button>
-      </form>
-      <p class="tiny-note" id="formNote">La confirmación quedará lista para vincular al WhatsApp de la familia.</p>
-    </section>
+<section class="night boat" data-sky="22">
+  <div class="inner">
+    <svg class="sun"><use href="#sun"/></svg>
+    <p class="script lead2">Gracias por ser parte<br>de este momento tan especial</p>
+    <p class="gold">❧ ♥ ❧</p>
+  </div>
+</section>
+</main>
 
-    <section class="closing">
-      <div class="closing-overlay"></div>
-      <div class="closing-content"><div class="sun-emblem" aria-label="Emblema solar dorado">✹</div>
-        <p class="eyebrow">La noche será más linda con vos</p>
-        <h2>¡Te espero!</h2>
-        <div class="ornament">❧ ✧ ❧</div>
-        <p>Con cariño,</p><div class="signature">Rocío</div>
-        <img class="pascal-cameo" src="assets/pascal.svg" alt="Camaleón verde inspirado en Pascal"><p class="closing-date">19 · 12 · 2026</p>
-      </div>
-    </section>
-  </main>
-  <footer>Hecho con ✧ para los XV de Rocío Yazmin Ojeda Goffi</footer>
-  <script src="script.js"></script>
+<div class="modal" id="songModal" aria-hidden="true"><div class="card" role="dialog" aria-modal="true" aria-labelledby="songTitle">
+  <button class="x" id="songClose" aria-label="Cerrar">×</button>
+  <h2 class="script purple" id="songTitle">Sugerir canción</h2>
+  <form id="songForm"><input id="songName" placeholder="Canción y artista" required><button class="btn fill" type="submit">Enviar sugerencia</button></form>
+  <p class="note" id="songNote"></p>
+</div></div>
+<script src="script.js"></script>
 </body>
 </html>
