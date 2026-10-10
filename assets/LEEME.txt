@@ -1,0 +1,1 @@
+Colocá la canción elegida en esta carpeta con el nombre musica.mp3. Antes de publicar, configurá el número de WhatsApp en script.js y completá horario/salón/dirección en index.html. Las fotos actuales son imágenes de muestra externas y se pueden reemplazar en index.html.
