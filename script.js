@@ -1,166 +1,80 @@
-// Invitación de Rocío Yazmin Ojeda Goffi
-// Fecha confirmada: 19 de diciembre de 2026.
-// Para habilitar los envíos, completar WHATSAPP_NUMBER con código de país y área,
-// solo números, sin +, espacios ni guiones. Ejemplo: 54911XXXXXXXX.
-
 (() => {
   'use strict';
+  const WHATSAPP_NUMBER = ''; // Completar: código de país + área, solo números. Ej: 54911XXXXXXXX
+  const eventDate = new Date('2026-12-19T00:00:00-03:00');
+  const $ = (id) => document.getElementById(id);
 
-  const WHATSAPP_NUMBER = ''; // Completar antes de publicar.
-  const eventDate = new Date('2026-12-19T20:00:00-03:00');
+  // Cuenta regresiva
+  const tick = () => {
+    const d = Math.max(0, eventDate - Date.now());
+    const v = { days: Math.floor(d / 864e5), hours: Math.floor(d / 36e5) % 24, minutes: Math.floor(d / 6e4) % 60, seconds: Math.floor(d / 1e3) % 60 };
+    for (const k in v) $(k).textContent = k === 'days' ? v[k] : String(v[k]).padStart(2, '0');
+  };
+  tick(); setInterval(tick, 1000);
 
-  const byId = (id) => document.getElementById(id);
-  const music = byId('backgroundMusic');
-  const musicToggle = byId('musicToggle');
-  const form = byId('rsvpForm');
-  const formNote = byId('formNote');
-  const menuToggle = byId('menuToggle');
-  const navLinks = byId('navLinks');
+  // Menú
+  const menu = $('menu'), mb = $('menuBtn');
+  mb.onclick = () => mb.setAttribute('aria-expanded', menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => a.onclick = () => { menu.classList.remove('open'); mb.setAttribute('aria-expanded', 'false'); });
 
-  function updateCountdown() {
-    const diff = Math.max(0, eventDate.getTime() - Date.now());
-    const values = {
-      days: Math.floor(diff / 86400000),
-      hours: Math.floor(diff / 3600000) % 24,
-      minutes: Math.floor(diff / 60000) % 60,
-      seconds: Math.floor(diff / 1000) % 60
-    };
+  // Música
+  const audio = $('bgMusic'), fab = $('musicToggle');
+  fab.onclick = async () => {
+    if (audio.paused) {
+      try { await audio.play(); fab.classList.add('playing'); fab.setAttribute('aria-label', 'Pausar música'); }
+      catch { alert('Falta agregar el archivo assets/musica.mp3'); }
+    } else { audio.pause(); fab.classList.remove('playing'); fab.setAttribute('aria-label', 'Reproducir música'); }
+  };
 
-    Object.entries(values).forEach(([id, value]) => {
-      const element = byId(id);
-      if (element) {
-        element.textContent = id === 'days'
-          ? String(value)
-          : String(value).padStart(2, '0');
-      }
+  // Linternas y flores decorativas
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  document.querySelectorAll('[data-sky]').forEach(s => {
+    for (let i = 0; i < +s.dataset.sky; i++) {
+      const l = document.createElement('span'); l.className = 'ln';
+      l.style.cssText = `left:${rnd(2, 96)}%;top:${rnd(2, 80)}%;transform:scale(${rnd(.5, 1.3)});animation-delay:${rnd(0, 5)}s`;
+      s.prepend(l);
+    }
+  });
+  document.querySelectorAll('section').forEach(s => {
+    [['-18px', '-14px', 80, 'auto', 'auto'], ['auto', '-22px', 64, '-14px', 'auto'], ['-26px', 'auto', 70, 'auto', '-10px']].forEach(([b, r, w, l, t], i) => {
+      if (i === 0) return;
+      const f = document.createElement('span'); f.className = 'fl';
+      f.style.cssText = `width:${w}px;height:${w}px;${i === 1 ? 'bottom:-14px;left:-14px' : 'bottom:-18px;right:-14px'};transform:rotate(${i * 30}deg)`;
+      f.innerHTML = '<svg><use href="#fl"/></svg>'; s.append(f);
     });
-  }
+  });
 
-  updateCountdown();
-  window.setInterval(updateCountdown, 1000);
+  // Galería
+  const stack = $('stack');
+  $('next').onclick = () => stack.append(stack.firstElementChild);
+  $('prev').onclick = () => stack.prepend(stack.lastElementChild);
 
-  // Música: si todavía no se agregó assets/musica.mp3, se informa sin romper la página.
-  if (musicToggle && music) {
-    musicToggle.addEventListener('click', async () => {
-      const label = musicToggle.querySelector('.music-label');
-      if (music.paused) {
-        try {
-          await music.play();
-          musicToggle.classList.add('playing');
-          musicToggle.setAttribute('aria-label', 'Pausar música');
-          if (label) label.textContent = 'Pausar';
-        } catch (error) {
-          if (label) label.textContent = 'Agregar canción';
-          if (formNote) {
-            formNote.textContent = 'La música todavía no está cargada. Agregá el archivo assets/musica.mp3 cuando elijas la canción.';
-          }
-        }
-      } else {
-        music.pause();
-        musicToggle.classList.remove('playing');
-        musicToggle.setAttribute('aria-label', 'Reproducir música');
-        if (label) label.textContent = 'Música';
-      }
-    });
-  }
+  // Agregar al calendario (día completo; el horario está a confirmar)
+  $('calBtn').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' +
+    encodeURIComponent('XV Años de Rocío Yazmin Ojeda Goffi') + '&dates=20261219/20261220';
 
-  // Menú adaptable para celulares.
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
+  const wa = (msg) => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 
-    navLinks.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
+  // RSVP
+  $('rsvpForm').onsubmit = (e) => {
+    e.preventDefault();
+    const d = new FormData(e.target);
+    const msg = ['Hola, confirmo para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, d.get('guestMessage') ? `Mensaje: ${d.get('guestMessage')}` : ''].filter(Boolean).join('\n');
+    if (!WHATSAPP_NUMBER) { $('formNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
+    wa(msg);
+  };
 
-  // Confirmación de asistencia.
-  if (form) {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const data = new FormData(form);
-      const message = [
-        'Hola, confirmo para los XV de Rocío Yazmin Ojeda Goffi.',
-        `Nombre: ${data.get('guestName') || ''}`,
-        `Cantidad: ${data.get('guestCount') || ''}`,
-        `Asistencia: ${data.get('attendance') || ''}`,
-        data.get('guestMessage') ? `Mensaje: ${data.get('guestMessage')}` : ''
-      ].filter(Boolean).join('\n');
-
-      if (!WHATSAPP_NUMBER) {
-        if (formNote) {
-          formNote.textContent = 'Formulario de prueba: falta configurar el WhatsApp de la familia para enviar la confirmación.';
-        }
-        return;
-      }
-
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
-    });
-  }
-
-  // Modal flotante para sugerir canciones.
-  const songModal = byId('songModal');
-  const songOpen = byId('songSuggestOpen');
-  const songClose = byId('songSuggestClose');
-  const songForm = byId('songForm');
-  const songNote = byId('songNote');
-  const songName = byId('songName');
-
-  function closeSongModal() {
-    if (!songModal) return;
-    songModal.classList.remove('open');
-    songModal.setAttribute('aria-hidden', 'true');
-  }
-
-  if (songModal && songOpen && songClose && songForm && songName) {
-    songOpen.addEventListener('click', () => {
-      songModal.classList.add('open');
-      songModal.setAttribute('aria-hidden', 'false');
-      songName.focus();
-    });
-
-    songClose.addEventListener('click', closeSongModal);
-
-    songModal.addEventListener('click', (event) => {
-      if (event.target === songModal) closeSongModal();
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeSongModal();
-    });
-
-    songForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const suggestion = songName.value.trim();
-      if (!suggestion) {
-        if (songNote) songNote.textContent = 'Escribí el nombre de una canción antes de enviarla.';
-        songName.focus();
-        return;
-      }
-
-      if (!WHATSAPP_NUMBER) {
-        if (songNote) {
-          songNote.textContent = `Sugerencia de prueba: “${suggestion}”. Falta configurar el WhatsApp de la familia para enviarla.`;
-        }
-        return;
-      }
-
-      const message = `Hola, quiero sugerir una canción para los XV de Rocío: ${suggestion}`;
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
-      closeSongModal();
-    });
-  }
+  // Modal de canciones
+  const modal = $('songModal');
+  const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); };
+  document.querySelectorAll('[data-song]').forEach(b => b.onclick = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); $('songName').focus(); });
+  $('songClose').onclick = close;
+  modal.onclick = (e) => { if (e.target === modal) close(); };
+  document.onkeydown = (e) => { if (e.key === 'Escape') close(); };
+  $('songForm').onsubmit = (e) => {
+    e.preventDefault();
+    const s = $('songName').value.trim();
+    if (!WHATSAPP_NUMBER) { $('songNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
+    wa(`Hola, quiero sugerir una canción para los XV de Rocío: ${s}`); close();
+  };
 })();
