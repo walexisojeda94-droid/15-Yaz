@@ -16,7 +16,7 @@ function updateCountdown() {
   };
   Object.entries(values).forEach(([id, value]) => {
     const el = document.getElementById(id);
-    if (el) el.textContent = id === 'days' ? String(value).padStart(3, '0') : String(value).padStart(2, '0');
+    if (el) el.textContent = id === 'days' ? String(value) : String(value).padStart(2, '0');
   });
 }
 updateCountdown();
@@ -70,3 +70,6 @@ form.addEventListener('submit', event => {
   }
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 });
+
+// Modal flotante para sugerir canciones.
+const songModal=document.getElementById('songModal');const songOpen=document.getElementById('songSuggestOpen');const songClose=document.getElementById('songSuggestClose');const songForm=document.getElementById('songForm');const songNote=document.getElementById('songNote');function closeSongModal(){songModal.classList.remove('open');songModal.setAttribute('aria-hidden','true')}songOpen.addEventListener('click',()=>{songModal.classList.add('open');songModal.setAttribute('aria-hidden','false');document.getElementById('songName').focus()});songClose.addEventListener('click',closeSongModal);songModal.addEventListener('click',e=>{if(e.target===songModal)closeSongModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSongModal()});songForm.addEventListener('submit',e=>{e.preventDefault();const WHATSAPP_NUMBER='';const suggestion=document.getElementById('songName').value.trim();if(!WHATSAPP_NUMBER){songNote.textContent=`Sugerencia de prueba: “${suggestion}”. Cuando configuremos el WhatsApp, se podrá enviar directamente.`;return}const message=`Hola, quiero sugerir una canción para los XV de Rocío: ${suggestion}`;window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,'_blank','noopener');closeSongModal()});
