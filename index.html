@@ -19,6 +19,12 @@
     <!-- Reemplazar musica.mp3 por la canción elegida y colocar el archivo en la carpeta assets -->
     <source src="assets/musica.mp3" type="audio/mpeg">
   </audio>
+  <button class="song-float" id="songSuggestOpen" aria-label="Sugerir una canción">♫ <span>Sugerir canción</span></button>
+  <div class="song-modal" id="songModal" aria-hidden="true"><div class="song-card" role="dialog" aria-modal="true" aria-labelledby="songTitle">
+    <button class="song-close" id="songSuggestClose" aria-label="Cerrar">×</button><div class="sun-emblem small" aria-hidden="true">✹</div>
+    <p class="eyebrow">La banda sonora de esta noche</p><h2 id="songTitle">¿Qué canción sugerís?</h2><p>Dejanos el nombre de una canción y el artista.</p>
+    <form id="songForm"><label for="songName">Canción y artista</label><input id="songName" name="songName" placeholder="Ej. canción · artista" required><button class="button button-purple" type="submit">Enviar sugerencia ↗</button></form>
+    <p class="tiny-note" id="songNote">La sugerencia se enviará por WhatsApp cuando configuremos el número.</p></div></div>
 
   <nav class="top-nav" aria-label="Navegación principal">
     <a href="#inicio" class="brand-mark" aria-label="Ir al inicio">✧ R ✧</a>
@@ -33,7 +39,7 @@
       <div class="hero-shade"></div>
       <div class="lantern lantern-one">✦</div><div class="lantern lantern-two">✧</div><div class="lantern lantern-three">✦</div>
       <div class="hero-content reveal">
-        <div class="crown">♕</div>
+        <div class="sun-emblem" aria-label="Emblema solar de cuento">✹</div><div class="crown">♕</div>
         <p class="eyebrow">Una noche de cuento · Mis</p>
         <h1>XV Años</h1>
         <p class="name-script">Rocío Yazmin</p>
@@ -107,12 +113,12 @@
 
     <section class="closing">
       <div class="closing-overlay"></div>
-      <div class="closing-content">
+      <div class="closing-content"><div class="sun-emblem" aria-label="Emblema solar dorado">✹</div>
         <p class="eyebrow">La noche será más linda con vos</p>
         <h2>¡Te espero!</h2>
         <div class="ornament">❧ ✧ ❧</div>
         <p>Con cariño,</p><div class="signature">Rocío</div>
-        <p class="closing-date">19 · 12 · 2026</p>
+        <img class="pascal-cameo" src="assets/pascal.svg" alt="Camaleón verde inspirado en Pascal"><p class="closing-date">19 · 12 · 2026</p>
       </div>
     </section>
   </main>
