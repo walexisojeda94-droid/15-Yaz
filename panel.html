@@ -68,7 +68,17 @@ const fmt = (ts) => ts && ts.toDate ? ts.toDate().toLocaleString('es-AR', { date
 const cell = (tr, text, cls) => { const td = document.createElement('td'); td.textContent = text || ''; if (cls) td.className = cls; tr.append(td); return td; };
 let unsub = [];
 
-$('in').onclick = () => { $('msg').textContent = ''; signInWithPopup(auth, new GoogleAuthProvider()).catch(() => { $('msg').textContent = 'No se pudo ingresar. Probá de nuevo.'; }); };
+$('in').onclick = () => { $('msg').textContent = ''; signInWithPopup(auth, new GoogleAuthProvider()).catch((e) => {
+  const host = location.hostname || '(archivo local)';
+  const m = {
+    'auth/unauthorized-domain': `Falta autorizar este dominio en Firebase: ${host}. Entrá a Authentication → Configuración → Dominios autorizados y agregalo.`,
+    'auth/operation-not-allowed': 'Falta activar Google en Firebase: Authentication → Sign-in method → Google → Habilitar.',
+    'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Permití las ventanas emergentes para este sitio y probá de nuevo.',
+    'auth/popup-closed-by-user': 'La ventana de Google se cerró antes de terminar. Probá de nuevo.',
+    'auth/operation-not-supported-in-this-environment': 'Abrí el panel desde el link publicado, no desde el archivo guardado en la compu.'
+  };
+  $('msg').textContent = (m[e.code] || 'No se pudo ingresar.') + ' (' + (e.code || e.message) + ')';
+}); };
 $('out').onclick = () => signOut(auth);
 const show = (g) => { $('pG').hidden = !g; $('pS').hidden = g; $('tG').classList.toggle('on', g); $('tS').classList.toggle('on', !g); };
 $('tG').onclick = () => show(true); $('tS').onclick = () => show(false);
