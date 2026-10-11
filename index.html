@@ -68,8 +68,8 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 .tower{--img:url(assets/Torre.jpg);--h:46%}.tower::before{top:0;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
 .pascal{width:150px;margin-top:14px}.ph img{object-position:center}
 
-.px{display:block;width:var(--w);aspect-ratio:var(--bw)/var(--bh);background:var(--img) no-repeat;background-size:calc(var(--iw)/var(--bw)*100%) auto;background-position:calc(var(--bx)/(var(--iw) - var(--bw))*100%) calc(var(--by)/(var(--ih) - var(--bh))*100%)}
-.px.sun{margin:0 0 10px}.px.sun.dark{position:absolute;top:20px;left:50%;transform:translateX(-50%);margin:0}
+.px{display:block;width:var(--w);height:auto;aspect-ratio:var(--bw)/var(--bh);background:var(--img) no-repeat;background-size:calc(var(--iw)/var(--bw)*100%) auto;background-position:calc(var(--bx)/(var(--iw) - var(--bw))*100%) calc(var(--by)/(var(--ih) - var(--bh))*100%)}
+.px.sun{margin:0 auto 10px}.px.sun.dark{position:absolute;top:20px;left:50%;transform:translateX(-50%);margin:0}
 .px.cal{margin:20px auto 0}.px.asis{margin:6px auto 14px}.px.mus{margin:22px auto 0}
 .hero::before{background-position:40% bottom}
 .tower::before,.boat::before{display:none}
@@ -78,6 +78,9 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 .boat{background:linear-gradient(180deg,#140b2acc 0,#140b2a55 35%,transparent 55%),url("assets/Final.jpg") center/cover no-repeat}
 .tower .foot{margin-top:34px}
 .dec{position:absolute;z-index:1;pointer-events:none;filter:drop-shadow(0 4px 6px #20152d44)}
+.info .gift-txt{display:block;line-height:1.5}.gift-btn{width:auto;display:inline-block;margin-top:10px;padding:10px 24px}
+.gift{overflow:hidden;padding:36px 28px 56px;border:1px solid #e4d0a0}.gift>p,.gift>h2,.gift>.gsun{position:relative;z-index:2}.gift .x{z-index:3}
+.px.gsun{margin:0 auto}.gift h2{margin:6px 0 10px}.gift-alias{font-size:16px;margin:8px 0;color:var(--ink)}.gift-name{font-size:24px;margin:2px 0 0}
 </style>
 </head>
 <body>
@@ -92,7 +95,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <a href="#inicio">Inicio</a><a href="#historia">La invitación</a><a href="#galeria">Galería</a><a href="#detalles">Información</a><a href="#confirmacion">Confirmar asistencia</a><a href="#musica">Música</a>
 </nav>
 <button class="music-fab" id="musicToggle" aria-label="Reproducir música"><svg><use href="#note"/></svg></button>
-<audio id="bgMusic" loop preload="none"><source src="assets/musica.mp3" type="audio/mpeg"></audio>
+<audio id="bgMusic" loop preload="auto"><source src="assets/musica.mp3" type="audio/mpeg"></audio>
 
 <main>
 <section class="night hero art" id="inicio" data-sky="16">
@@ -145,16 +148,14 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <p class="orn">❧ ✧ ❧</p>
   <ul class="info">
     <li><i>▦</i><div><b>Fecha</b><span>19 de diciembre de 2026</span></div></li>
-    <li><i>◷</i><div><b>Horario</b><span>A confirmar</span></div></li>
-    <li><i>⌂</i><div><b>Salón</b><span>A confirmar</span></div></li>
-    <li><i>⌖</i><div><b>Ubicación</b><span>A confirmar</span></div></li>
+    <li><i>◷</i><div><b>Horario</b><span>21 Hs.</span></div></li>
+    <li><i>⌂</i><div><b>Salón</b><span>Abril Recepciones</span></div></li>
+    <li><i>⌖</i><div><b>Ubicación</b><span>Villegas 917, Ramos Mejía</span></div></li>
     <li><i>♧</i><div><b>Vestimenta</b><span>Elegante / Formal</span></div></li>
-    <li><i>♡</i><div><b>Regalos</b><span>Tu presencia es el mejor regalo</span></div></li>
+    <li><i>♡</i><div><b>Regalos</b><span class="gift-txt">Si deseas regalarme algo más que tu hermosa presencia...</span><button class="btn fill gift-btn" id="giftOpen" type="button">Ver alias</button></div></li>
   </ul>
   <div class="btns">
     <a class="btn fill" href="#confirmacion">Confirmar asistencia</a>
-    <a class="btn line" id="calBtn" href="#" target="_blank" rel="noopener">Agregar al calendario</a>
-    <button class="btn line" data-song>Sugerir canción</button>
   </div>
 </section>
 
@@ -208,6 +209,14 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <form id="songForm"><input id="songName" placeholder="Canción y artista" required><button class="btn fill" type="submit">Enviar sugerencia</button></form>
   <p class="note" id="songNote"></p>
 </div></div>
+<div class="modal" id="giftModal" aria-hidden="true"><div class="card gift" role="dialog" aria-modal="true" aria-labelledby="giftTitle">
+  <span class="px dec" aria-hidden="true" style="left:-6px;top:-6px;transform:rotate(-14deg);--w:56px;--iw:456;--ih:579;--bx:82;--by:179;--bw:310;--bh:375;--img:url('assets/Lampara 2.png')"></span><span class="px dec" aria-hidden="true" style="right:-8px;top:40px;transform:rotate(12deg);--w:54px;--iw:600;--ih:600;--bx:119;--by:55;--bw:361;--bh:489;--img:url('assets/Lampara.png')"></span><span class="px dec" aria-hidden="true" style="left:-12px;bottom:-10px;transform:rotate(-8deg);--w:92px;--iw:736;--ih:736;--bx:77;--by:82;--bw:598;--bh:491;--img:url('assets/Flor amarilla.png')"></span><span class="px dec" aria-hidden="true" style="right:10px;bottom:12px;transform:rotate(14deg);--w:48px;--iw:1080;--ih:1350;--bx:324;--by:468;--bw:432;--bh:414;--img:url('assets/Flor Violeta.png')"></span>
+  <button class="x" id="giftClose" aria-label="Cerrar">×</button>
+  <span class="px gsun" role="img" aria-label="Sol violeta" style="--w:54px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
+  <h2 class="script purple" id="giftTitle">Regalos</h2>
+  <p class="gift-alias"><b>Alias:</b> xxxx</p>
+  <p class="serif gift-name">Rocío Yazmin Ojeda</p>
+</div></div>
 <script>(() => {
   'use strict';
   const WHATSAPP_NUMBER = ''; // Completar: código de país + área, solo números. Ej: 54911XXXXXXXX
@@ -229,12 +238,22 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 
   // Música
   const audio = $('bgMusic'), fab = $('musicToggle');
+  let userPaused = false;
+  const setUI = (on) => { fab.classList.toggle('playing', on); fab.setAttribute('aria-label', on ? 'Pausar música' : 'Reproducir música'); };
+  const start = () => audio.play().then(() => { setUI(true); return true; }).catch(() => false);
   fab.onclick = async () => {
-    if (audio.paused) {
-      try { await audio.play(); fab.classList.add('playing'); fab.setAttribute('aria-label', 'Pausar música'); }
-      catch { alert('Falta agregar el archivo assets/musica.mp3'); }
-    } else { audio.pause(); fab.classList.remove('playing'); fab.setAttribute('aria-label', 'Reproducir música'); }
+    if (audio.paused) { userPaused = false; if (!(await start())) alert('No se pudo reproducir assets/musica.mp3'); }
+    else { userPaused = true; audio.pause(); setUI(false); }
   };
+  // Arranca sola al abrir; si el navegador la bloquea, suena con el primer toque en la pantalla.
+  start().then((ok) => {
+    if (ok) return;
+    const unlock = (e) => {
+      if (userPaused || fab.contains(e.target)) return;
+      start().then((done) => { if (done) ['pointerdown', 'touchend', 'click', 'keydown'].forEach((t) => document.removeEventListener(t, unlock, true)); });
+    };
+    ['pointerdown', 'touchend', 'click', 'keydown'].forEach((t) => document.addEventListener(t, unlock, true));
+  });
 
   // Linternas y flores decorativas
   const rnd = (a, b) => a + Math.random() * (b - a);
@@ -272,17 +291,21 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   $('next').onclick = () => stack.append(stack.firstElementChild);
   $('prev').onclick = () => stack.prepend(stack.lastElementChild);
 
-  // Agregar al calendario (día completo; el horario está a confirmar)
-  $('calBtn').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' +
-    encodeURIComponent('XV Años de Rocío Yazmin Ojeda Goffi') + '&dates=20261219/20261220';
 
   const wa = (msg) => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 
   // RSVP
+  const NO = 'Esta vez no podré asistir';
+  const att = document.querySelector('[name=attendance]'), cnt = document.querySelector('[name=guestCount]');
+  att.addEventListener('change', () => { cnt.required = att.value !== NO; });
   $('rsvpForm').onsubmit = (e) => {
     e.preventDefault();
     const d = new FormData(e.target);
-    const msg = ['Hola, confirmo para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, d.get('guestMessage') ? `Mensaje: ${d.get('guestMessage')}` : ''].filter(Boolean).join('\n');
+    const own = d.get('guestMessage');
+    const msg = (d.get('attendance') === NO
+      ? ['Hola, esta vez no podré asistir para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
+      : ['Hola, confirmo para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, own ? `Mensaje: ${own}` : '']
+    ).filter(Boolean).join('\n');
     if (!WHATSAPP_NUMBER) { $('formNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
     wa(msg);
   };
@@ -300,6 +323,13 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     if (!WHATSAPP_NUMBER) { $('songNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
     wa(`Hola, quiero sugerir una canción para los XV de Rocío: ${s}`); close();
   };
+  // Pop-up de regalos
+  const gift = $('giftModal');
+  const gClose = () => { gift.classList.remove('open'); gift.setAttribute('aria-hidden', 'true'); };
+  $('giftOpen').onclick = () => { gift.classList.add('open'); gift.setAttribute('aria-hidden', 'false'); };
+  $('giftClose').onclick = gClose;
+  gift.onclick = (e) => { if (e.target === gift) gClose(); };
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') gClose(); });
 })();
 </script>
 </body>
