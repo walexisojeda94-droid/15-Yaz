@@ -164,6 +164,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <span class="px asis" role="img" aria-label="Asistecia" style="--w:110px;--iw:2560;--ih:1573;--bx:717;--by:136;--bw:1158;--bh:1329;--img:url('assets/Asistecia.png')"></span>
   <form id="rsvpForm">
     <input name="guestName" placeholder="Nombre y apellido" aria-label="Nombre y apellido" required>
+    <input name="guestPhone" type="tel" inputmode="tel" placeholder="Tu número de WhatsApp" aria-label="Tu número de WhatsApp" pattern="[0-9+() \-]{8,20}" title="Escribí tu número con código de área" required>
     <select name="guestCount" aria-label="Cantidad de personas" required><option value="">Cantidad de personas</option><option>0 persona</option><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 o más personas</option></select>
     <select name="attendance" aria-label="¿Podés asistir?" required><option value="">¿Podés asistir?</option><option>Sí, ¡allí estaré!</option><option>Esta vez no podré asistir</option></select>
     <textarea name="guestMessage" rows="3" placeholder="Mensaje (opcional)" aria-label="Mensaje"></textarea>
@@ -217,6 +218,8 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 <script>(() => {
   'use strict';
   const WHATSAPP_NUMBER = ''; // Completar: código de país + área, solo números. Ej: 54911XXXXXXXX
+  const FIREBASE_API_KEY = 'AIzaSyBB9klQ5vfcydkqWXdt9zQo13EZK1Av1hM'; // Completar: apiKey de la app web de Firebase
+  const FIREBASE_PROJECT_ID = 'yaz-26d2b'; // Completar: projectId de Firebase
   const eventDate = new Date('2026-12-19T00:00:00-03:00');
   const $ = (id) => document.getElementById(id);
 
@@ -290,6 +293,17 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   $('prev').onclick = () => stack.prepend(stack.lastElementChild);
 
 
+  // Guarda en Firebase (Firestore) sin frenar el envío por WhatsApp (keepalive: se completa aunque se abra WhatsApp).
+  // El ID del documento empieza con la fecha y hora, así en el panel se ven siempre en orden de llegada.
+  const save = (col, row) => {
+    if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return;
+    const fields = { creado: { timestampValue: new Date().toISOString() } };
+    Object.entries(row).forEach(([k, v]) => { if (v) fields[k] = { stringValue: String(v) }; });
+    const id = new Date().toISOString().replace(/\D/g, '') + '-' + Math.random().toString(36).slice(2, 6);
+    fetch(`https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${col}?documentId=${id}&key=${FIREBASE_API_KEY}`, {
+      method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields })
+    }).then((r) => { if (!r.ok) console.error('Firebase', col, r.status); }).catch((err) => console.error('Firebase', col, err));
+  };
   const wa = (msg) => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 
   // RSVP
@@ -304,7 +318,8 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
       ? ['Hola, esta vez no podré asistir para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
       : ['Hola, confirmo para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, own ? `Mensaje: ${own}` : '']
     ).filter(Boolean).join('\n');
-    if (!WHATSAPP_NUMBER) { $('formNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
+    save('confirmaciones', { nombre: d.get('guestName'), telefono: d.get('guestPhone'), cantidad: d.get('guestCount') || null, asistencia: d.get('attendance'), mensaje: own || null });
+    if (!WHATSAPP_NUMBER) { $('formNote').textContent = FIREBASE_PROJECT_ID ? '¡Gracias! Tu respuesta quedó registrada.' : 'Falta configurar el número de WhatsApp y Firebase en index.html.'; return; }
     wa(msg);
   };
 
@@ -318,7 +333,8 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   $('songForm').onsubmit = (e) => {
     e.preventDefault();
     const s = $('songName').value.trim();
-    if (!WHATSAPP_NUMBER) { $('songNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
+    save('canciones', { cancion: s });
+    if (!WHATSAPP_NUMBER) { $('songNote').textContent = FIREBASE_PROJECT_ID ? '¡Gracias! Tu sugerencia quedó registrada.' : 'Falta configurar el número de WhatsApp y Firebase en index.html.'; return; }
     wa(`Hola, quiero sugerir una canción para los XV de Rocío: ${s}`); close();
   };
   // Pop-up de regalos
