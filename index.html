@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#3b2466">
-<title>Mis XV · Rocío Yazmin Ojeda Goffi</title>
+<title>Mis XV · Rocío </title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>:root{--ink:#3a2563;--purple:#5b3a8c;--deep:#2a1a4d;--gold:#e6c98b;--lav:#efe3f7;--cream:#fbf6fd}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -102,8 +102,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <div class="inner">
     <span class="px sun" role="img" aria-label="Sol dorado" style="--w:66px;--iw:736;--ih:712;--bx:58;--by:62;--bw:620;--bh:616;--img:url('assets/Sol dorado.png')"></span>
     <p class="serif">Mis XV Años</p>
-    <h1 class="script gold">Rocío Yazmin</h1>
-    <p class="serif big">Ojeda Goffi</p>
+    <h1 class="script gold">Rocío</p>
     <p class="orn">❧ ✧ ❧</p>
   </div>
   <a class="chev" href="#historia" aria-label="Bajar">⌄</a>
@@ -113,8 +112,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <p class="serif lead">Hay momentos que<br>se convierten en sueños…<br>y este es uno de ellos.</p>
   <p class="orn">❧ ✧ ❧</p>
-  <h2 class="script purple">Rocío Yazmin</h2>
-  <p class="serif big">Ojeda Goffi</p>
+  <h2 class="script purple">Rocío</p>
   <p class="orn">❧ ✧ ❧</p>
   <p class="falta">FALTAN</p>
   <div class="count" aria-label="Cuenta regresiva">
@@ -190,7 +188,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     <p class="serif lead">Lo más lindo<br>de la vida, no es lo que<br>se ve, sino lo que se siente.</p>
     <p class="serif lead">Gracias por ser parte<br>de este momento tan especial…</p>
   </div>
-  <div class="foot"><h2 class="script gold">Rocío Yazmin</h2><p class="serif big">Ojeda Goffi</p><p class="gold">♥</p></div>
+  <div class="foot"><h2 class="script gold">Rocío</p><p class="gold">♥</p></div>
 </section>
 
 <section class="night boat art" >
@@ -214,7 +212,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <span class="px gsun" role="img" aria-label="Sol violeta" style="--w:54px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <h2 class="script purple" id="giftTitle">Regalos</h2>
   <p class="gift-alias"><b>Alias:</b> xxxx</p>
-  <p class="serif gift-name">Rocío Yazmin Ojeda</p>
+  <p class="serif gift-name">Rocío</p>
 </div></div>
 <script>(() => {
   'use strict';
@@ -302,8 +300,8 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     const d = new FormData(e.target);
     const own = d.get('guestMessage');
     const msg = (d.get('attendance') === NO
-      ? ['Hola, esta vez no podré asistir para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
-      : ['Hola, confirmo para los XV de Rocío Yazmin Ojeda Goffi.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, own ? `Mensaje: ${own}` : '']
+      ? ['Hola, esta vez no podré asistir para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
+      : ['Hola, confirmo para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, own ? `Mensaje: ${own}` : '']
     ).filter(Boolean).join('\n');
     if (!WHATSAPP_NUMBER) { $('formNote').textContent = 'Falta configurar el número de WhatsApp en script.js.'; return; }
     wa(msg);
