@@ -12,6 +12,7 @@ main{max-width:980px;margin:0 auto;padding:36px 16px 60px}
 h1{font:400 clamp(44px,9vw,64px) 'Great Vibes',cursive;color:#5b3a8c;text-align:center;margin:0 0 6px}
 .sub{text-align:center;font:500 20px 'Cormorant Garamond',serif;margin:0 0 26px}
 .box{background:#ffffffcc;border:1px solid #d8c7e5;border-radius:16px;padding:22px;box-shadow:0 10px 30px #5b3a8c1a}
+input{width:100%;padding:13px;margin:6px 0;border:1px solid #cdb7e2;border-radius:10px;background:#fff;color:#3a2563;font:14px Montserrat,sans-serif}
 #login{max-width:420px;margin:30px auto;text-align:center}
 button{border:0;border-radius:40px;padding:13px 26px;font:500 12px Montserrat,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;background:linear-gradient(180deg,#7656a5,#5b3a8c);color:#fff}
 button.line{background:transparent;color:#5b3a8c;border:2px solid #5b3a8c}
@@ -33,9 +34,13 @@ li small{margin-left:auto;font:400 11px Montserrat;color:#7a6a8c;white-space:now
   <p class="sub">Invitados y canciones de sugerencia</p>
 
   <div id="login" class="box">
-    <p>Ingresá con tu cuenta de Google para ver las respuestas.</p>
-    <button id="in" type="button">Ingresar con Google</button>
-    <p id="msg"></p>
+    <form id="lf">
+      <p>Ingresá con tu usuario y contraseña.</p>
+      <input id="em" type="text" placeholder="Usuario" autocomplete="username" autocapitalize="none" required>
+      <input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+      <button type="submit">Ingresar</button>
+      <p id="msg"></p>
+    </form>
   </div>
 
   <div id="app" hidden>
@@ -53,7 +58,7 @@ li small{margin-left:auto;font:400 11px Montserrat;color:#7a6a8c;white-space:now
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, collection, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const app = initializeApp({
@@ -68,17 +73,19 @@ const fmt = (ts) => ts && ts.toDate ? ts.toDate().toLocaleString('es-AR', { date
 const cell = (tr, text, cls) => { const td = document.createElement('td'); td.textContent = text || ''; if (cls) td.className = cls; tr.append(td); return td; };
 let unsub = [];
 
-$('in').onclick = () => { $('msg').textContent = ''; signInWithPopup(auth, new GoogleAuthProvider()).catch((e) => {
-  const host = location.hostname || '(archivo local)';
-  const m = {
-    'auth/unauthorized-domain': `Falta autorizar este dominio en Firebase: ${host}. Entrá a Authentication → Configuración → Dominios autorizados y agregalo.`,
-    'auth/operation-not-allowed': 'Falta activar Google en Firebase: Authentication → Sign-in method → Google → Habilitar.',
-    'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Permití las ventanas emergentes para este sitio y probá de nuevo.',
-    'auth/popup-closed-by-user': 'La ventana de Google se cerró antes de terminar. Probá de nuevo.',
-    'auth/operation-not-supported-in-this-environment': 'Abrí el panel desde el link publicado, no desde el archivo guardado en la compu.'
-  };
-  $('msg').textContent = (m[e.code] || 'No se pudo ingresar.') + ' (' + (e.code || e.message) + ')';
-}); };
+$('lf').onsubmit = (ev) => {
+  ev.preventDefault(); $('msg').textContent = '';
+  signInWithEmailAndPassword(auth, $('em').value.trim().toLowerCase() + '@xv-panel.com', $('pw').value).catch((e) => {
+    const m = {
+      'auth/invalid-credential': 'Usuario o contraseña incorrectos.',
+      'auth/invalid-email': 'El usuario no es válido.',
+      'auth/too-many-requests': 'Demasiados intentos. Esperá unos minutos y probá de nuevo.',
+      'auth/operation-not-allowed': 'Falta activar Correo/contraseña en Firebase: Authentication → Sign-in method.',
+      'auth/network-request-failed': 'Sin conexión. Revisá internet y probá de nuevo.'
+    };
+    $('msg').textContent = (m[e.code] || 'No se pudo ingresar.') + ' (' + (e.code || e.message) + ')';
+  });
+};
 $('out').onclick = () => signOut(auth);
 const show = (g) => { $('pG').hidden = !g; $('pS').hidden = g; $('tG').classList.toggle('on', g); $('tS').classList.toggle('on', !g); };
 $('tG').onclick = () => show(true); $('tS').onclick = () => show(false);
