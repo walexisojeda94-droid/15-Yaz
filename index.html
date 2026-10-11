@@ -63,10 +63,21 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 .card h2{font-size:44px;margin:0 0 14px}.x{position:absolute;top:8px;right:14px;border:0;background:none;font-size:28px;color:#7a6a8c;cursor:pointer}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .art::before{content:"";position:absolute;left:0;right:0;height:var(--h);background:var(--img) center/cover no-repeat;-webkit-mask-image:linear-gradient(transparent,#000 30%);mask-image:linear-gradient(transparent,#000 30%)}
-.hero{--img:url(assets/portada.jpg);--h:60%}.hero::before{bottom:0}
-.boat{--img:url(assets/final.jpg);--h:62%}.boat::before{bottom:0}
-.tower{--img:url(assets/torre.jpg);--h:46%}.tower::before{top:0;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.hero{--img:url(assets/Portada.jpg);--h:60%}.hero::before{bottom:0}
+.boat{--img:url(assets/Final.jpg);--h:62%}.boat::before{bottom:0}
+.tower{--img:url(assets/Torre.jpg);--h:46%}.tower::before{top:0;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
 .pascal{width:150px;margin-top:14px}.ph img{object-position:center}
+
+.px{display:block;width:var(--w);aspect-ratio:var(--bw)/var(--bh);background:var(--img) no-repeat;background-size:calc(var(--iw)/var(--bw)*100%) auto;background-position:calc(var(--bx)/(var(--iw) - var(--bw))*100%) calc(var(--by)/(var(--ih) - var(--bh))*100%)}
+.px.sun{margin:0 0 10px}.px.sun.dark{position:absolute;top:20px;left:50%;transform:translateX(-50%);margin:0}
+.px.cal{margin:20px auto 0}.px.asis{margin:6px auto 14px}.px.mus{margin:22px auto 0}
+.hero::before{background-position:40% bottom}
+.tower::before,.boat::before{display:none}
+.tower,.boat{justify-content:flex-start;padding-top:96px}
+.tower{background:linear-gradient(180deg,#140b2acc 0,#140b2a55 35%,transparent 55%),url("assets/Torre.jpg") center/cover no-repeat}
+.boat{background:linear-gradient(180deg,#140b2acc 0,#140b2a55 35%,transparent 55%),url("assets/Final.jpg") center/cover no-repeat}
+.tower .foot{margin-top:34px}
+.dec{position:absolute;z-index:1;pointer-events:none;filter:drop-shadow(0 4px 6px #20152d44)}
 </style>
 </head>
 <body>
@@ -86,7 +97,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 <main>
 <section class="night hero art" id="inicio" data-sky="16">
   <div class="inner">
-    <svg class="sun"><use href="#sun"/></svg>
+    <span class="px sun" role="img" aria-label="Sol dorado" style="--w:66px;--iw:736;--ih:712;--bx:58;--by:62;--bw:620;--bh:616;--img:url('assets/Sol dorado.png')"></span>
     <p class="serif">Mis XV Años</p>
     <h1 class="script gold">Rocío Yazmin</h1>
     <p class="serif big">Ojeda Goffi</p>
@@ -96,7 +107,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 </section>
 
 <section class="paper" id="historia">
-  <svg class="sun dark"><use href="#sun"/></svg>
+  <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <p class="serif lead">Hay momentos que<br>se convierten en sueños…<br>y este es uno de ellos.</p>
   <p class="orn">❧ ✧ ❧</p>
   <p class="serif">Mis XV Años</p>
@@ -107,12 +118,12 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   <div class="count" aria-label="Cuenta regresiva">
     <div><b id="days">0</b><span>Días</span></div><div><b id="hours">00</b><span>Horas</span></div><div><b id="minutes">00</b><span>Minutos</span></div><div><b id="seconds">00</b><span>Segundos</span></div>
   </div>
-  <img class="pascal" src="assets/pascal.png" alt="Camaleón verde">
+  <span class="px cal" role="img" aria-label="Calendario" style="--w:190px;--iw:736;--ih:672;--bx:22;--by:22;--bw:677;--bh:636;--img:url('assets/Calendario.png')"></span>
   <a class="chev dark" href="#galeria" aria-label="Bajar">⌄</a>
 </section>
 
 <section class="paper" id="galeria">
-  <svg class="sun dark"><use href="#sun"/></svg>
+  <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <h2 class="script purple">Galería</h2>
   <p class="serif">Nuestra historia en imágenes</p>
   <div class="gal">
@@ -129,7 +140,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 </section>
 
 <section class="paper" id="detalles">
-  <svg class="sun dark"><use href="#sun"/></svg>
+  <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <h2 class="script purple">Información de la Fiesta</h2>
   <p class="orn">❧ ✧ ❧</p>
   <ul class="info">
@@ -148,10 +159,11 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 </section>
 
 <section class="paper" id="confirmacion">
-  <svg class="sun dark"><use href="#sun"/></svg>
+  <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <h2 class="script purple">Confirmá tu asistencia</h2>
   <p class="orn">❧ ✧ ❧</p>
   <p class="serif lead">¡Nos encantaría que seas parte<br>de este día tan especial!</p>
+  <span class="px asis" role="img" aria-label="Asistecia" style="--w:110px;--iw:2560;--ih:1573;--bx:717;--by:136;--bw:1158;--bh:1329;--img:url('assets/Asistecia.png')"></span>
   <form id="rsvpForm">
     <input name="guestName" placeholder="Nombre y apellido" aria-label="Nombre y apellido" required>
     <select name="guestCount" aria-label="Cantidad de personas" required><option value="">Cantidad de personas</option><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 o más personas</option></select>
@@ -163,27 +175,27 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 </section>
 
 <section class="paper" id="musica">
-  <svg class="sun dark"><use href="#sun"/></svg>
+  <span class="px sun dark" role="img" aria-label="Sol violeta" style="--w:66px;--iw:579;--ih:564;--bx:27;--by:10;--bw:525;--bh:531;--img:url('assets/Sol violeta.png')"></span>
   <h2 class="script purple">Nuestra Música</h2>
   <p class="serif">La banda sonora de este gran día</p>
   <div class="wreath"><div><svg><use href="#note"/></svg></div></div>
   <p class="serif lead">Por ahora, esta sección<br>estará en blanco…<br>¡Muy pronto agregaremos<br>nuestra lista de canciones!</p>
   <button class="btn fill" data-song>Sugerir canción</button>
-  <img class="pascal" src="assets/pascal.png" alt="Camaleón verde">
+  <span class="px mus" role="img" aria-label="Musica" style="--w:190px;--iw:675;--ih:1200;--bx:10;--by:178;--bw:638;--bh:761;--img:url('assets/Musica.png')"></span>
 </section>
 
-<section class="night tower art" id="cierre" data-sky="22">
+<section class="night tower art" id="cierre" >
   <div class="inner">
-    <svg class="sun"><use href="#sun"/></svg>
+    <span class="px sun" role="img" aria-label="Sol dorado" style="--w:66px;--iw:736;--ih:712;--bx:58;--by:62;--bw:620;--bh:616;--img:url('assets/Sol dorado.png')"></span>
     <p class="serif lead">Lo más lindo<br>de la vida, no es lo que<br>se ve, sino lo que se siente.</p>
     <p class="serif lead">Gracias por ser parte<br>de este momento tan especial…</p>
   </div>
   <div class="foot"><h2 class="script gold">Rocío Yazmin</h2><p class="serif big">Ojeda Goffi</p><p class="gold">♥</p></div>
 </section>
 
-<section class="night boat art" data-sky="22">
+<section class="night boat art" >
   <div class="inner">
-    <svg class="sun"><use href="#sun"/></svg>
+    <span class="px sun" role="img" aria-label="Sol dorado" style="--w:66px;--iw:736;--ih:712;--bx:58;--by:62;--bw:620;--bh:616;--img:url('assets/Sol dorado.png')"></span>
     <p class="script lead2">Gracias por ser parte<br>de este momento tan especial</p>
     <p class="gold">❧ ♥ ❧</p>
   </div>
@@ -233,12 +245,25 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
       s.prepend(l);
     }
   });
-  document.querySelectorAll('section').forEach(s => {
-    [['-18px', '-14px', 80, 'auto', 'auto'], ['auto', '-22px', 64, '-14px', 'auto'], ['-26px', 'auto', 70, 'auto', '-10px']].forEach(([b, r, w, l, t], i) => {
-      if (i === 0) return;
-      const f = document.createElement('span'); f.className = 'fl';
-      f.style.cssText = `width:${w}px;height:${w}px;${i === 1 ? 'bottom:-14px;left:-14px' : 'bottom:-18px;right:-14px'};transform:rotate(${i * 30}deg)`;
-      f.innerHTML = '<svg><use href="#fl"/></svg>'; s.append(f);
+  // Decoración de las esquinas: "Lampara", "Lampara 2", "Flor Violeta" y "Flor amarilla"
+  const IMG = {
+    'Lampara.png': [600, 600, 119, 55, 361, 489],
+    'Lampara 2.png': [456, 579, 82, 179, 310, 375],
+    'Flor Violeta.png': [1080, 1350, 324, 468, 432, 414],
+    'Flor amarilla.png': [736, 736, 77, 82, 598, 491]
+  };
+  const sets = [
+    [['Flor amarilla.png', 'left:-10px;bottom:-8px', 96, -8], ['Flor Violeta.png', 'right:6px;bottom:12px', 56, 14], ['Lampara.png', 'right:-8px;top:64px', 56, 12]],
+    [['Lampara 2.png', 'left:-6px;bottom:6px', 64, -14], ['Flor amarilla.png', 'right:-12px;bottom:-8px', 92, 18], ['Flor Violeta.png', 'left:14px;bottom:86px', 42, -10]]
+  ];
+  document.querySelectorAll('section').forEach((s, i) => {
+    sets[i % 2].forEach(([n, pos, w, r]) => {
+      const [iw, ih, bx, by, bw, bh] = IMG[n];
+      const el = document.createElement('span');
+      el.className = 'px dec';
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText = `${pos};transform:rotate(${r}deg);--w:${w}px;--iw:${iw};--ih:${ih};--bx:${bx};--by:${by};--bw:${bw};--bh:${bh};--img:url("assets/${n}")`;
+      s.append(el);
     });
   });
 
