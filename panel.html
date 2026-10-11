@@ -75,7 +75,7 @@ let unsub = [];
 
 $('lf').onsubmit = (ev) => {
   ev.preventDefault(); $('msg').textContent = '';
-  signInWithEmailAndPassword(auth, $('em').value.trim().toLowerCase() + '@xv-panel.com', $('pw').value).catch((e) => {
+  signInWithEmailAndPassword(auth, (($('em').value.trim().toLowerCase()).includes('@') ? $('em').value.trim().toLowerCase() : $('em').value.trim().toLowerCase() + '@xv-panel.com'), $('pw').value).catch((e) => {
     const m = {
       'auth/invalid-credential': 'Usuario o contraseña incorrectos.',
       'auth/invalid-email': 'El usuario no es válido.',
