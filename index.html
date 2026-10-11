@@ -273,6 +273,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     [['Lampara 2.png', 'left:-6px;bottom:6px', 64, -14], ['Flor amarilla.png', 'right:-12px;bottom:-8px', 92, 18], ['Flor Violeta.png', 'left:14px;bottom:86px', 42, -10]]
   ];
   document.querySelectorAll('section').forEach((s, i) => {
+    if (s.classList.contains('night')) return; // sin decoración en las pantallas con imagen
     sets[i % 2].forEach(([n, pos, w, r]) => {
       const [iw, ih, bx, by, bw, bh] = IMG[n];
       const el = document.createElement('span');
