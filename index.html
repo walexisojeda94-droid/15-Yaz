@@ -45,7 +45,7 @@ section{position:relative;min-height:100svh;overflow:hidden;text-align:center;di
 .arr{position:absolute;top:50%;z-index:5;border:0;background:none;color:var(--purple);font-size:36px;cursor:pointer}.arr.l{left:-26px}.arr.r{right:-26px}
 .info{list-style:none;padding:0;margin:10px 0 24px;width:min(340px,100%);text-align:left}
 .info li{display:flex;gap:16px;align-items:center;padding:11px 0}.info i{font-style:normal;width:38px;font-size:26px;color:var(--purple);text-align:center}
-.info b{display:block;font:600 15px 'Cormorant Garamond',serif}.info span{font-size:12px;color:#7a6a8c}
+.info b{display:block;font:600 15px 'Cormorant Garamond',serif}.info span{font-size:12px;color:#7a6a8c}.info a.map-link{font-size:12px;color:#7a6a8c;text-decoration:underline;text-decoration-color:#c9a45c;text-underline-offset:3px}.info a.map-link:focus-visible{outline:2px solid var(--purple);outline-offset:4px;border-radius:3px}
 .btns{display:grid;gap:10px;width:min(340px,100%)}
 .btn{display:block;width:100%;padding:14px;border-radius:40px;border:2px solid var(--purple);font:500 12px Montserrat,sans-serif;letter-spacing:.06em;text-decoration:none;cursor:pointer}
 .btn.fill{background:linear-gradient(180deg,#7656a5,var(--purple));color:#fff}.btn.line{background:transparent;color:var(--purple)}
@@ -147,7 +147,7 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     <li><i>▦</i><div><b>Fecha</b><span>19 de diciembre de 2026</span></div></li>
     <li><i>◷</i><div><b>Horario</b><span>22 Hs.</span></div></li>
     <li><i>⌂</i><div><b>Salón</b><span>Abril Recepciones</span></div></li>
-    <li><i>⌖</i><div><b>Ubicación</b><span>Villegas 917, Ramos Mejía</span></div></li>
+    <li><i>⌖</i><div><b>Ubicación</b><a class="map-link" href="https://www.google.com/maps/place/Tom%C3%A1s+Justo+Villegas+917,+B1722+Ramos+Mej%C3%ADa,+Provincia+de+Buenos+Aires/@-34.6657771,-58.5527741,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcc87e20758693:0x21aae13786fa0acc!8m2!3d-34.6657815!4d-58.5501992!16s%2Fg%2F11snpyhn58?entry=ttu&amp;g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Tomás Justo Villegas 917, Ramos Mejía</a></div></li>
     <li><i>♧</i><div><b>Vestimenta</b><span>Elegante Sport</span></div></li>
     <li><i>♡</i><div><b>Regalos</b><span class="gift-txt">Si deseas regalarme algo más que tu hermosa presencia...</span><button class="btn fill gift-btn" id="giftOpen" type="button">¡Has clic acá!</button></div></li>
   </ul>
