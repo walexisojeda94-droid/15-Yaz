@@ -23,6 +23,7 @@ section{position:relative;min-height:100svh;overflow:hidden;text-align:center;di
 .paper h2{font-size:clamp(46px,9vw,64px);margin:30px 0 4px;line-height:1.1}
 .deadline{font-family:'Great Vibes',cursive;font-weight:400;font-size:26px;line-height:1.5;width:min(340px,100%);text-align:right;margin:0 auto 4px}
 .lead{font-size:23px;line-height:1.5}.paper .lead{margin:24px 0}
+.conditional-field{width:100%}.conditional-field[hidden]{display:none}
 .night{color:#fff;background:linear-gradient(180deg,#2a1a4d,#4b2d78 60%,#a8604f 120%)}
 .hero{background:linear-gradient(180deg,#2a1a4d,#4b2d78 60%,#a8604f 120%);justify-content:flex-start;padding-top:90px}
 .tower{background:linear-gradient(180deg,#2a1a4d,#4b2d78 60%,#a8604f 120%);justify-content:flex-end;padding-top:46vh}
@@ -168,6 +169,23 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     <input name="guestPhone" type="tel" inputmode="tel" placeholder="Tu número de WhatsApp" aria-label="Tu número de WhatsApp" pattern="[0-9+() \-]{8,20}" title="Escribí tu número con código de área" required>
     <select name="guestCount" aria-label="Cantidad de personas" required><option value="">Cantidad de personas</option><option>0 persona</option><option>1 persona</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5 o más personas</option></select>
     <select name="attendance" aria-label="¿Podés asistir?" required><option value="">¿Podés asistir?</option><option>Sí, ¡allí estaré!</option><option>Esta vez no podré asistir</option></select>
+    <div id="celiacQuestion" class="conditional-field" hidden>
+      <select name="celiac" aria-label="¿Hay familiares celíacos?">
+        <option value="">¿Hay familiares celíacos?</option>
+        <option>Sí</option>
+        <option>No</option>
+      </select>
+    </div>
+    <div id="celiacCountQuestion" class="conditional-field" hidden>
+      <select name="celiacCount" aria-label="¿Cuántas personas celíacas?">
+        <option value="">¿Cuántas personas?</option>
+        <option>1 persona</option>
+        <option>2 personas</option>
+        <option>3 personas</option>
+        <option>4 personas</option>
+        <option>5 o más personas</option>
+      </select>
+    </div>
     <textarea name="guestMessage" rows="3" placeholder="Dejá los nombres de todos los que asisten" aria-label="Mensaje"></textarea>
     <button class="btn fill" type="submit">Enviar</button>
   </form>
@@ -309,17 +327,33 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 
   // RSVP
   const NO = 'Esta vez no podré asistir';
+  const YES = 'Sí, ¡allí estaré!';
   const att = document.querySelector('[name=attendance]'), cnt = document.querySelector('[name=guestCount]');
-  att.addEventListener('change', () => { cnt.required = att.value !== NO; });
+  const celiacWrap = $('celiacQuestion'), celiacCountWrap = $('celiacCountQuestion');
+  const celiac = document.querySelector('[name=celiac]'), celiacCount = document.querySelector('[name=celiacCount]');
+  const updateConditionalQuestions = () => {
+    cnt.required = att.value !== NO;
+    const attending = att.value === YES;
+    celiacWrap.hidden = !attending;
+    celiac.required = attending;
+    if (!attending) celiac.value = '';
+    const hasCeliac = attending && celiac.value === 'Sí';
+    celiacCountWrap.hidden = !hasCeliac;
+    celiacCount.required = hasCeliac;
+    if (!hasCeliac) celiacCount.value = '';
+  };
+  att.addEventListener('change', updateConditionalQuestions);
+  celiac.addEventListener('change', updateConditionalQuestions);
+  updateConditionalQuestions();
   $('rsvpForm').onsubmit = (e) => {
     e.preventDefault();
     const d = new FormData(e.target);
     const own = d.get('guestMessage');
     const msg = (d.get('attendance') === NO
       ? ['Hola, esta vez no podré asistir para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
-      : ['Hola, confirmo para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, own ? `Mensaje: ${own}` : '']
+      : ['Hola, confirmo para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, `¿Hay familiares celíacos?: ${d.get('celiac')}`, d.get('celiac') === 'Sí' ? `Cantidad de personas celíacas: ${d.get('celiacCount')}` : '', own ? `Mensaje: ${own}` : '']
     ).filter(Boolean).join('\n');
-    save('confirmaciones', { nombre: d.get('guestName'), telefono: d.get('guestPhone'), cantidad: d.get('guestCount') || null, asistencia: d.get('attendance'), mensaje: own || null });
+    save('confirmaciones', { nombre: d.get('guestName'), telefono: d.get('guestPhone'), cantidad: d.get('guestCount') || null, asistencia: d.get('attendance'), celiacos: d.get('celiac') || null, cantidadCeliacos: d.get('celiacCount') || null, mensaje: own || null });
     if (!WHATSAPP_NUMBER) { $('formNote').textContent = FIREBASE_PROJECT_ID ? '¡Gracias! Tu respuesta quedó registrada.' : 'Falta configurar el número de WhatsApp y Firebase en index.html.'; return; }
     wa(msg);
   };
