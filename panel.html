@@ -49,7 +49,7 @@ li small{margin-left:auto;font:400 11px Montserrat;color:#7a6a8c;white-space:now
       <button id="tS" type="button">Canciones de sugerencia</button>
     </div>
     <div class="box" id="pG"><div class="wrap"><table>
-      <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Asistencia</th><th>Personas</th><th>Mensaje</th><th>Fecha</th></tr></thead>
+      <thead><tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Asistencia</th><th>Personas</th><th>¿Celíacos?</th><th>Cantidad celíacos</th><th>Mensaje</th><th>Fecha</th></tr></thead>
       <tbody id="rows"></tbody></table></div><p class="empty" id="eG" hidden>Todavía no hay confirmaciones.</p></div>
     <div class="box" id="pS" hidden><ol id="songs"></ol><p class="empty" id="eS" hidden>Todavía no hay sugerencias.</p></div>
     <p class="top"><button class="line" id="out" type="button">Salir</button></p>
@@ -103,7 +103,7 @@ onAuthStateChanged(auth, (user) => {
       cell(tr, String(i + 1), 'n'); cell(tr, x.nombre); cell(tr, x.telefono);
       const a = cell(tr, ''); const t = document.createElement('span'); const no = /no podr/i.test(x.asistencia || '');
       t.className = 'tag' + (no ? ' no' : ''); t.textContent = no ? 'No asiste' : 'Asiste'; a.append(t);
-      cell(tr, x.cantidad); cell(tr, x.mensaje); cell(tr, fmt(x.creado));
+      cell(tr, x.cantidad); cell(tr, x.celiacos); cell(tr, x.cantidadCeliacos); cell(tr, x.mensaje); cell(tr, fmt(x.creado));
       rows.append(tr);
     });
     $('eG').hidden = snap.size > 0; $('tG').textContent = `Invitados (${snap.size})`;
