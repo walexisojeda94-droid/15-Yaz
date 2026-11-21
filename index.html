@@ -312,16 +312,37 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   $('prev').onclick = () => stack.prepend(stack.lastElementChild);
 
 
-  // Guarda en Firebase (Firestore) sin frenar el envío por WhatsApp (keepalive: se completa aunque se abra WhatsApp).
-  // El ID del documento empieza con la fecha y hora, así en el panel se ven siempre en orden de llegada.
-  const save = (col, row) => {
-    if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return;
+  // Guarda y espera la confirmación real de Firestore antes de informar que se registró.
+  // El ID comienza con fecha y hora para mantener el orden de llegada en el panel.
+  const save = async (col, row) => {
+    if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) {
+      return { ok: false, error: 'La conexión con Firebase no está configurada.' };
+    }
     const fields = { creado: { timestampValue: new Date().toISOString() } };
-    Object.entries(row).forEach(([k, v]) => { if (v) fields[k] = { stringValue: String(v) }; });
+    Object.entries(row).forEach(([k, v]) => {
+      if (v !== null && v !== undefined && v !== '') fields[k] = { stringValue: String(v) };
+    });
     const id = new Date().toISOString().replace(/\D/g, '') + '-' + Math.random().toString(36).slice(2, 6);
-    fetch(`https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${col}?documentId=${id}&key=${FIREBASE_API_KEY}`, {
-      method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields })
-    }).then((r) => { if (!r.ok) console.error('Firebase', col, r.status); }).catch((err) => console.error('Firebase', col, err));
+    try {
+      const response = await fetch(`https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${col}?documentId=${id}&key=${FIREBASE_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields })
+      });
+      if (!response.ok) {
+        let detail = '';
+        try {
+          const data = await response.json();
+          detail = data.error && data.error.message ? data.error.message : '';
+        } catch (_) {}
+        console.error('Firestore', col, response.status, detail);
+        return { ok: false, error: detail || `Firebase rechazó el registro (HTTP ${response.status}).` };
+      }
+      return { ok: true };
+    } catch (error) {
+      console.error('Firestore', col, error);
+      return { ok: false, error: 'No se pudo conectar con Firebase. Revisá tu conexión e intentá nuevamente.' };
+    }
   };
   const wa = (msg) => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
 
@@ -345,17 +366,49 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   att.addEventListener('change', updateConditionalQuestions);
   celiac.addEventListener('change', updateConditionalQuestions);
   updateConditionalQuestions();
-  $('rsvpForm').onsubmit = (e) => {
+  $('rsvpForm').onsubmit = async (e) => {
     e.preventDefault();
-    const d = new FormData(e.target);
+    const form = e.currentTarget;
+    const submit = form.querySelector('[type="submit"]');
+    const note = $('formNote');
+    if (submit.disabled) return;
+    const d = new FormData(form);
     const own = d.get('guestMessage');
     const msg = (d.get('attendance') === NO
       ? ['Hola, esta vez no podré asistir para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Mensaje: ¡Pido perdón por mi ausencia!${own ? ' ' + own : ''}`]
       : ['Hola, confirmo para los XV de Rocío.', `Nombre: ${d.get('guestName')}`, `Cantidad: ${d.get('guestCount')}`, `Asistencia: ${d.get('attendance')}`, `¿Hay familiares celíacos?: ${d.get('celiac')}`, d.get('celiac') === 'Sí' ? `Cantidad de personas celíacas: ${d.get('celiacCount')}` : '', own ? `Mensaje: ${own}` : '']
     ).filter(Boolean).join('\n');
-    save('confirmaciones', { nombre: d.get('guestName'), telefono: d.get('guestPhone'), cantidad: d.get('guestCount') || null, asistencia: d.get('attendance'), celiacos: d.get('celiac') || null, cantidadCeliacos: d.get('celiacCount') || null, mensaje: own || null });
-    if (!WHATSAPP_NUMBER) { $('formNote').textContent = FIREBASE_PROJECT_ID ? '¡Gracias! Tu respuesta quedó registrada.' : 'Falta configurar el número de WhatsApp y Firebase en index.html.'; return; }
-    wa(msg);
+
+    // Abrimos una pestaña vacía durante el clic para evitar que el navegador bloquee WhatsApp al terminar el guardado.
+    const whatsappTab = WHATSAPP_NUMBER ? window.open('about:blank', '_blank') : null;
+    submit.disabled = true;
+    submit.textContent = 'Guardando…';
+    note.textContent = 'Registrando tu respuesta…';
+    const result = await save('confirmaciones', {
+      nombre: d.get('guestName'),
+      telefono: d.get('guestPhone'),
+      cantidad: d.get('guestCount') || null,
+      asistencia: d.get('attendance'),
+      celiacos: d.get('celiac') || null,
+      cantidadCeliacos: d.get('celiacCount') || null,
+      mensaje: own || null
+    });
+    if (!result.ok) {
+      if (whatsappTab) whatsappTab.close();
+      note.textContent = `No pudimos registrar tu respuesta. ${result.error} No vuelvas a enviarla hasta corregir el problema.`;
+      submit.disabled = false;
+      submit.textContent = 'Reintentar envío';
+      return;
+    }
+    note.textContent = '¡Gracias! Tu respuesta quedó registrada correctamente.';
+    if (WHATSAPP_NUMBER) {
+      if (whatsappTab) whatsappTab.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      else note.textContent += ' El registro se guardó, pero el navegador bloqueó la apertura de WhatsApp.';
+    }
+    form.reset();
+    updateConditionalQuestions();
+    submit.disabled = false;
+    submit.textContent = 'Enviar';
   };
 
   // Modal de canciones
@@ -365,12 +418,34 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
   $('songClose').onclick = close;
   modal.onclick = (e) => { if (e.target === modal) close(); };
   document.onkeydown = (e) => { if (e.key === 'Escape') close(); };
-  $('songForm').onsubmit = (e) => {
+  $('songForm').onsubmit = async (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const submit = form.querySelector('[type="submit"]');
+    const note = $('songNote');
+    if (submit.disabled) return;
     const s = $('songName').value.trim();
-    save('canciones', { cancion: s });
-    if (!WHATSAPP_NUMBER) { $('songNote').textContent = FIREBASE_PROJECT_ID ? '¡Gracias! Tu sugerencia quedó registrada.' : 'Falta configurar el número de WhatsApp y Firebase en index.html.'; return; }
-    wa(`Hola, quiero sugerir una canción para los XV de Rocío: ${s}`); close();
+    const whatsappTab = WHATSAPP_NUMBER ? window.open('about:blank', '_blank') : null;
+    submit.disabled = true;
+    submit.textContent = 'Guardando…';
+    note.textContent = 'Registrando tu sugerencia…';
+    const result = await save('canciones', { cancion: s });
+    if (!result.ok) {
+      if (whatsappTab) whatsappTab.close();
+      note.textContent = `No pudimos guardar la sugerencia. ${result.error}`;
+      submit.disabled = false;
+      submit.textContent = 'Reintentar envío';
+      return;
+    }
+    note.textContent = '¡Gracias! Tu sugerencia quedó registrada correctamente.';
+    if (WHATSAPP_NUMBER) {
+      if (whatsappTab) whatsappTab.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola, quiero sugerir una canción para los XV de Rocío: ${s}`)}`;
+      else note.textContent += ' El registro se guardó, pero el navegador bloqueó la apertura de WhatsApp.';
+    }
+    form.reset();
+    submit.disabled = false;
+    submit.textContent = 'Enviar sugerencia';
+    close();
   };
   // Pop-up de regalos
   const gift = $('giftModal');
