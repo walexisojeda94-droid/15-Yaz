@@ -64,37 +64,48 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 .card{position:relative;background:var(--cream);border-radius:18px;padding:30px 24px;width:min(400px,100%);text-align:center}
 .card h2{font-size:44px;margin:0 0 14px}.x{position:absolute;top:8px;right:14px;border:0;background:none;font-size:28px;color:#7a6a8c;cursor:pointer}
 
-/* Apertura de la invitación */
+/* Apertura de la invitación: sobre ornamental inspirado en la referencia */
 body.intro-lock{overflow:hidden}
-.intro-screen{position:fixed;z-index:100;inset:0;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 38%,#68439a 0,#352052 54%,#160e29 100%);transition:opacity 1s ease,visibility 1s ease}
+.intro-screen{position:fixed;z-index:100;inset:0;display:grid;place-items:center;overflow:hidden;padding:0;background:#cbbbd8;transition:opacity 1s ease,visibility 1s ease}
 .intro-screen.done{opacity:0;visibility:hidden;pointer-events:none}
-.intro-stars,.intro-stars:before,.intro-stars:after{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 18% 22%,#f4d99d 50%,transparent 60%),radial-gradient(1px 1px at 78% 18%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 82% 72%,#e6c98b 50%,transparent 60%),radial-gradient(1px 1px at 28% 78%,#fff 50%,transparent 60%);opacity:.65;content:""}
-.intro-stars:before{transform:translateY(12px) scale(1.2);opacity:.4}
-.intro-invite{position:relative;z-index:2;width:min(340px,86vw);height:min(490px,70vh);min-height:390px;border:1px solid #e8d3a1;border-radius:5px;background:linear-gradient(145deg,#fff9ef,#e8d9f1 52%,#d5c0e5);box-shadow:0 22px 70px #09051399,inset 0 0 0 7px #fff9,inset 0 0 0 9px #c9a45c;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#452b69;padding:30px 24px;transition:transform 1s ease,opacity 1s ease}
-.intro-invite:before,.intro-invite:after{content:"";position:absolute;inset:18px;border:1px solid #c9a45c;pointer-events:none}
-.intro-invite:after{inset:25px;border-color:#b89acb}
-.intro-seal{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;margin:12px auto 18px;border:2px solid #c9a45c;background:radial-gradient(circle,#76539a,#3a245c);color:#f5d99b;font:36px Georgia,serif;box-shadow:0 5px 18px #3a245c55}
-.intro-title{font:clamp(40px,12vw,54px) 'Great Vibes',cursive;color:#5b3a8c;margin:4px 0}
-.intro-sub{font:16px 'Cormorant Garamond',serif;letter-spacing:.12em;text-transform:uppercase;margin:5px 0;color:#80629a}
-.intro-rule{color:#b58b4b;letter-spacing:.3em;margin:12px 0}
-.intro-hint{position:absolute;bottom:38px;font:500 10px Montserrat,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f4e7c5;animation:introPulse 1.8s ease-in-out infinite}
-@keyframes introPulse{50%{opacity:.45;transform:translateY(3px)}}
-.intro-screen.opening .intro-invite{transform:translateY(-20px) scale(.94);opacity:0}
-.intro-smoke{position:absolute;z-index:3;inset:-20%;opacity:0;pointer-events:none;transform:scale(.55)}
-.intro-smoke:before,.intro-smoke:after{content:"";position:absolute;inset:0;background:
-radial-gradient(ellipse at 50% 54%,#b58adfdd 0 8%,transparent 34%),
-radial-gradient(ellipse at 34% 58%,#8053b8dd 0 12%,transparent 38%),
-radial-gradient(ellipse at 67% 47%,#c6a3e9cc 0 11%,transparent 36%),
-radial-gradient(ellipse at 50% 72%,#59347ecc 0 17%,transparent 46%),
-radial-gradient(ellipse at 20% 42%,#8b62c2aa 0 12%,transparent 40%) ;
-filter:blur(22px);animation:smokeDrift 3.5s ease-in-out infinite alternate}
-.intro-smoke:after{transform:rotate(28deg) scale(1.2);opacity:.7;animation-duration:4.5s;animation-direction:alternate-reverse}
-.intro-screen.opening .intro-smoke{opacity:1;transform:scale(1.5);transition:opacity .35s ease,transform 3s ease}
-@keyframes smokeDrift{from{translate:-5% 4%;scale:.92}to{translate:6% -5%;scale:1.12}}
+.intro-art{position:relative;width:100%;height:100%;max-width:560px;overflow:hidden;background:
+ radial-gradient(ellipse at 78% 75%,#f7dcae55 0,transparent 28%),
+ linear-gradient(160deg,#e7dcef 0%,#c8b8d5 52%,#a996bf 100%);box-shadow:0 0 34px #29183d66}
+.intro-art:before{content:"";position:absolute;inset:10px;border:2px solid #eee0ed;box-shadow:inset 0 0 0 3px #a88fb7,inset 0 0 0 6px #e8d9e8;z-index:8;pointer-events:none}
+.intro-art:after{content:"";position:absolute;inset:19px;border:1px solid #f7e8cf;z-index:8;pointer-events:none}
+.intro-stars{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(2px 2px at 16% 65%,#fff5d9 50%,transparent 70%),radial-gradient(2px 2px at 71% 58%,#fff1c7 50%,transparent 70%),radial-gradient(1px 1px at 85% 72%,#fff 50%,transparent 70%),radial-gradient(2px 2px at 57% 84%,#f8d9a5 50%,transparent 70%);opacity:.8}
+.intro-landscape{position:absolute;right:-3%;bottom:0;width:67%;height:51%;z-index:2;background:linear-gradient(0deg,#88729c55,transparent 65%),url("assets/Torre.jpg") center bottom/cover no-repeat;clip-path:polygon(13% 13%,100% 0,100% 100%,0 100%,0 45%);filter:saturate(.78) brightness(1.12)}
+.intro-landscape:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#cbbbd8 0%,#cbbbd855 24%,transparent 60%),linear-gradient(0deg,#a18caf33,transparent 55%)}
+.intro-vines{position:absolute;inset:0;z-index:5;pointer-events:none;color:#e8d5e6;filter:drop-shadow(0 1px 1px #8b739c)}
+.intro-vines svg{position:absolute;width:31%;height:30%;overflow:visible}
+.intro-vines .tl{top:1%;left:1%}.intro-vines .tr{top:1%;right:1%;transform:scaleX(-1)}
+.intro-vines .bl{bottom:0;left:1%;transform:scaleY(-1)}.intro-vines .br{bottom:0;right:1%;transform:scale(-1)}
+.intro-vines .topflower{position:absolute;width:70px;height:70px;top:1.2%;left:50%;transform:translateX(-50%);color:#f3dfc3}
+.intro-vines .sideflower{position:absolute;width:34px;height:34px;top:47%;color:#f0d8e9}
+.intro-vines .sideflower.left{left:4%}.intro-vines .sideflower.right{right:4%}
+.intro-flap{position:absolute;z-index:4;left:0;top:0;width:100%;height:57%;filter:drop-shadow(0 12px 10px #59466b55);transform-origin:50% 0;transition:transform 1.35s cubic-bezier(.2,.75,.25,1),opacity .8s ease}
+.intro-flap svg{width:100%;height:100%;display:block}
+.intro-flap .flap-fill{fill:url(#flapGradient);stroke:#e9d8ed;stroke-width:1.2}
+.intro-flap .flap-inner{fill:none;stroke:#a88eb6;stroke-width:1.4}
+.intro-flap .flap-ornament{fill:none;stroke:#e8d6c9;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.intro-flap .flap-flower{fill:#f2dfc9;stroke:#c5a9c7;stroke-width:1}
+.intro-seam{position:absolute;z-index:5;top:55%;left:50%;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8db,#d5a94e 60%,#8e6332);border:2px solid #f7e8c5;box-shadow:0 2px 5px #59466b77;transform:translate(-50%,-50%)}
+.intro-tag{position:absolute;z-index:6;top:59%;left:50%;transform:translateX(-50%);width:102px;height:174px;border-radius:48% 48% 45% 45%;border:3px double #e8c982;background:linear-gradient(135deg,#765c76,#392a45 65%,#6b4d66);box-shadow:0 8px 16px #34233f66;color:#f5dfae;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;padding:8px}
+.intro-tag:before{content:"";position:absolute;top:-28px;left:50%;height:29px;border-left:2px solid #d8b66f}
+.intro-tag:after{content:"";position:absolute;inset:6px;border:1px solid #c7a66b;border-radius:inherit;pointer-events:none}
+.intro-tag .tag-flower{font-size:20px;line-height:1}
+.intro-tag strong{font:italic 28px 'Great Vibes',cursive;font-weight:400}
+.intro-tag small{font:10px 'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase}
+.intro-hint{position:absolute;z-index:7;left:50%;top:80%;transform:translateX(-50%);font:500 10px Montserrat,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#f9ebd1;text-shadow:0 1px 4px #48344d;white-space:nowrap;animation:introPulse 1.8s ease-in-out infinite}
+@keyframes introPulse{50%{opacity:.5;translate:0 3px}}
+.intro-screen.opening .intro-flap{transform:rotateX(178deg);opacity:.25}
+.intro-screen.opening .intro-tag{animation:tagLift .9s ease forwards}
+@keyframes tagLift{to{transform:translate(-50%,18px) scale(.7);opacity:0}}
+.intro-smoke{position:absolute;z-index:7;inset:-15%;opacity:0;pointer-events:none;background:radial-gradient(ellipse at 50% 55%,#e8d8f0dd 0 9%,transparent 34%),radial-gradient(ellipse at 33% 58%,#9c79bddd 0 13%,transparent 42%),radial-gradient(ellipse at 68% 47%,#d7bce8dd 0 12%,transparent 39%);filter:blur(25px);transform:scale(.6);transition:opacity .5s,transform 3s}
+.intro-screen.opening .intro-smoke{opacity:1;transform:scale(1.5)}
 .intro-screen.reveal .intro-smoke{opacity:0;transition:opacity 1.2s ease}
-@media(max-width:420px){.intro-invite{height:min(450px,68vh);min-height:370px}.intro-hint{bottom:28px}}
-@media(prefers-reduced-motion:reduce){.intro-invite,.intro-screen,.intro-smoke,.intro-hint{transition:none!important;animation:none!important}}
-
+@media(max-width:420px){.intro-tag{width:88px;height:155px}.intro-tag strong{font-size:25px}.intro-hint{top:81%}.intro-vines .topflower{width:58px;height:58px}}
+@media(prefers-reduced-motion:reduce){.intro-flap,.intro-tag,.intro-screen,.intro-smoke,.intro-hint{transition:none!important;animation:none!important}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .art::before{content:"";position:absolute;left:0;right:0;height:var(--h);background:var(--img) center/cover no-repeat;-webkit-mask-image:linear-gradient(transparent,#000 30%);mask-image:linear-gradient(transparent,#000 30%)}
 .hero{--img:url(assets/Portada.jpg);--h:60%}.hero::before{bottom:0}
@@ -131,18 +142,36 @@ filter:blur(22px);animation:smokeDrift 3.5s ease-in-out infinite alternate}
 <button class="music-fab" id="musicToggle" aria-label="Reproducir música"><svg><use href="#note"/></svg></button>
 <audio id="bgMusic" loop preload="auto"><source src="assets/m%C3%BAsica.mp3" type="audio/mpeg"></audio>
 <div class="intro-screen" id="introScreen">
-  <div class="intro-stars" aria-hidden="true"></div>
-  <button class="intro-invite" id="openInvitation" type="button" aria-label="Abrir la invitación de Rocío">
-    <span class="intro-sub">Una noche mágica</span>
-    <span class="intro-rule">✧ ❧ ✧</span>
-    <span class="intro-title">Mis XV Años</span>
-    <span class="intro-seal" aria-hidden="true">R</span>
-    <span class="intro-title">Rocío</span>
-    <span class="intro-rule">❧ ✧ ❧</span>
-    <span class="intro-sub">19 · 12 · 2026</span>
-  </button>
-  <span class="intro-hint">Tocá la carta para abrirla</span>
-  <div class="intro-smoke" aria-hidden="true"></div>
+  <div class="intro-art">
+    <div class="intro-stars" aria-hidden="true"></div>
+    <div class="intro-landscape" aria-hidden="true"></div>
+    <div class="intro-vines" aria-hidden="true">
+      <svg class="tl" viewBox="0 0 180 220"><path d="M8 8 C70 10 10 78 66 82 S105 20 143 45 S104 120 160 130 M10 18 C40 44 28 68 58 72 M22 110 C52 96 40 144 76 151" fill="none" stroke="currentColor" stroke-width="3"/><path d="M45 48q-28-24-24-40q25 7 24 40M72 82q-8-34 12-43q13 24-12 43M115 47q18-25 39-18q-6 27-39 18M150 127q-25-6-27-27q27-2 27 27" fill="currentColor"/><g fill="#f1dfd0"><circle cx="25" cy="18" r="5"/><circle cx="73" cy="81" r="5"/><circle cx="144" cy="46" r="5"/></g></svg>
+      <svg class="tr" viewBox="0 0 180 220"><path d="M8 8 C70 10 10 78 66 82 S105 20 143 45 S104 120 160 130 M10 18 C40 44 28 68 58 72 M22 110 C52 96 40 144 76 151" fill="none" stroke="currentColor" stroke-width="3"/><path d="M45 48q-28-24-24-40q25 7 24 40M72 82q-8-34 12-43q13 24-12 43M115 47q18-25 39-18q-6 27-39 18M150 127q-25-6-27-27q27-2 27 27" fill="currentColor"/><g fill="#f1dfd0"><circle cx="25" cy="18" r="5"/><circle cx="73" cy="81" r="5"/><circle cx="144" cy="46" r="5"/></g></svg>
+      <svg class="bl" viewBox="0 0 180 220"><path d="M8 8 C70 10 10 78 66 82 S105 20 143 45 S104 120 160 130 M10 18 C40 44 28 68 58 72 M22 110 C52 96 40 144 76 151" fill="none" stroke="currentColor" stroke-width="3"/><path d="M45 48q-28-24-24-40q25 7 24 40M72 82q-8-34 12-43q13 24-12 43M115 47q18-25 39-18q-6 27-39 18M150 127q-25-6-27-27q27-2 27 27" fill="currentColor"/></svg>
+      <svg class="br" viewBox="0 0 180 220"><path d="M8 8 C70 10 10 78 66 82 S105 20 143 45 S104 120 160 130 M10 18 C40 44 28 68 58 72 M22 110 C52 96 40 144 76 151" fill="none" stroke="currentColor" stroke-width="3"/><path d="M45 48q-28-24-24-40q25 7 24 40M72 82q-8-34 12-43q13 24-12 43M115 47q18-25 39-18q-6 27-39 18M150 127q-25-6-27-27q27-2 27 27" fill="currentColor"/></svg>
+      <svg class="topflower" viewBox="0 0 100 100"><use href="#fl"/></svg>
+      <svg class="sideflower left" viewBox="0 0 100 100"><use href="#fl"/></svg>
+      <svg class="sideflower right" viewBox="0 0 100 100"><use href="#fl"/></svg>
+    </div>
+    <div class="intro-flap" aria-hidden="true">
+      <svg viewBox="0 0 400 520" preserveAspectRatio="none">
+        <defs><linearGradient id="flapGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e5d9e9"/><stop offset=".55" stop-color="#c9b9d5"/><stop offset="1" stop-color="#b9a5c9"/></linearGradient></defs>
+        <path class="flap-fill" d="M0 0H400V110C400 180 346 225 286 280L224 350Q200 380 176 350L114 280C54 225 0 180 0 110Z"/>
+        <path class="flap-inner" d="M12 12H388V108C388 171 337 214 279 267L219 337Q200 358 181 337L121 267C63 214 12 171 12 108Z"/>
+        <g class="flap-ornament"><path d="M18 22Q85 20 42 90Q18 125 65 151Q99 170 87 205M382 22Q315 20 358 90Q382 125 335 151Q301 170 313 205M80 245Q112 263 132 298M320 245Q288 263 268 298"/></g>
+        <g class="flap-flower"><circle cx="200" cy="34" r="8"/><circle cx="200" cy="17" r="8"/><circle cx="217" cy="34" r="8"/><circle cx="200" cy="51" r="8"/><circle cx="183" cy="34" r="8"/><circle cx="200" cy="34" r="5" fill="#d5ad69"/></g>
+        <g class="flap-flower"><circle cx="35" cy="42" r="5"/><circle cx="25" cy="32" r="5"/><circle cx="45" cy="32" r="5"/><circle cx="35" cy="22" r="5"/><circle cx="35" cy="32" r="3" fill="#d5ad69"/></g>
+        <g class="flap-flower"><circle cx="365" cy="42" r="5"/><circle cx="355" cy="32" r="5"/><circle cx="375" cy="32" r="5"/><circle cx="365" cy="22" r="5"/><circle cx="365" cy="32" r="3" fill="#d5ad69"/></g>
+      </svg>
+    </div>
+    <div class="intro-seam" aria-hidden="true"></div>
+    <button class="intro-tag" id="openInvitation" type="button" aria-label="Abrir la invitación de Rocío">
+      <span class="tag-flower">✽</span><strong>Clic aquí</strong><small>Mis XV · Rocío</small><span class="tag-flower">✽</span>
+    </button>
+    <span class="intro-hint">Tocá el medallón para abrir la invitación</span>
+    <div class="intro-smoke" aria-hidden="true"></div>
+  </div>
 </div>
 
 <main>
