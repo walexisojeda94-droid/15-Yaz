@@ -268,7 +268,7 @@ body.intro-lock{overflow:hidden}
 </div></div>
 <script>(() => {
   'use strict';
-  const WHATSAPP_NUMBER = ''; // Completar: código de país + área, solo números. Ej: 5491166297224
+  const WHATSAPP_NUMBER = '5491166297224'; // Código de país + área, solo números
   const FIREBASE_API_KEY = 'AIzaSyBB9klQ5vfcydkqWXdt9zQo13EZK1Av1hM'; // Completar: apiKey de la app web de Firebase
   const FIREBASE_PROJECT_ID = 'yaz-26d2b'; // Completar: projectId de Firebase
   const eventDate = new Date('2026-12-19T00:00:00-03:00');
@@ -407,7 +407,10 @@ body.intro-lock{overflow:hidden}
   const celiacWrap = $('celiacQuestion'), celiacCountWrap = $('celiacCountQuestion');
   const celiac = document.querySelector('[name=celiac]'), celiacCount = document.querySelector('[name=celiacCount]');
   const updateConditionalQuestions = () => {
-    cnt.required = att.value !== NO;
+    const notComing = att.value === NO;
+    cnt.required = !notComing;
+    cnt.hidden = notComing;
+    if (notComing) cnt.value = '';
     const attending = att.value === YES;
     celiacWrap.hidden = !attending;
     celiac.required = attending;
