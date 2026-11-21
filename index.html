@@ -63,6 +63,38 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 .modal{display:none;position:fixed;z-index:60;inset:0;background:#1d132dcc;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}
 .card{position:relative;background:var(--cream);border-radius:18px;padding:30px 24px;width:min(400px,100%);text-align:center}
 .card h2{font-size:44px;margin:0 0 14px}.x{position:absolute;top:8px;right:14px;border:0;background:none;font-size:28px;color:#7a6a8c;cursor:pointer}
+
+/* Apertura de la invitación */
+body.intro-lock{overflow:hidden}
+.intro-screen{position:fixed;z-index:100;inset:0;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 38%,#68439a 0,#352052 54%,#160e29 100%);transition:opacity 1s ease,visibility 1s ease}
+.intro-screen.done{opacity:0;visibility:hidden;pointer-events:none}
+.intro-stars,.intro-stars:before,.intro-stars:after{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 18% 22%,#f4d99d 50%,transparent 60%),radial-gradient(1px 1px at 78% 18%,#fff 50%,transparent 60%),radial-gradient(2px 2px at 82% 72%,#e6c98b 50%,transparent 60%),radial-gradient(1px 1px at 28% 78%,#fff 50%,transparent 60%);opacity:.65;content:""}
+.intro-stars:before{transform:translateY(12px) scale(1.2);opacity:.4}
+.intro-invite{position:relative;z-index:2;width:min(340px,86vw);height:min(490px,70vh);min-height:390px;border:1px solid #e8d3a1;border-radius:5px;background:linear-gradient(145deg,#fff9ef,#e8d9f1 52%,#d5c0e5);box-shadow:0 22px 70px #09051399,inset 0 0 0 7px #fff9,inset 0 0 0 9px #c9a45c;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#452b69;padding:30px 24px;transition:transform 1s ease,opacity 1s ease}
+.intro-invite:before,.intro-invite:after{content:"";position:absolute;inset:18px;border:1px solid #c9a45c;pointer-events:none}
+.intro-invite:after{inset:25px;border-color:#b89acb}
+.intro-seal{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;margin:12px auto 18px;border:2px solid #c9a45c;background:radial-gradient(circle,#76539a,#3a245c);color:#f5d99b;font:36px Georgia,serif;box-shadow:0 5px 18px #3a245c55}
+.intro-title{font:clamp(40px,12vw,54px) 'Great Vibes',cursive;color:#5b3a8c;margin:4px 0}
+.intro-sub{font:16px 'Cormorant Garamond',serif;letter-spacing:.12em;text-transform:uppercase;margin:5px 0;color:#80629a}
+.intro-rule{color:#b58b4b;letter-spacing:.3em;margin:12px 0}
+.intro-hint{position:absolute;bottom:38px;font:500 10px Montserrat,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f4e7c5;animation:introPulse 1.8s ease-in-out infinite}
+@keyframes introPulse{50%{opacity:.45;transform:translateY(3px)}}
+.intro-screen.opening .intro-invite{transform:translateY(-20px) scale(.94);opacity:0}
+.intro-smoke{position:absolute;z-index:3;inset:-20%;opacity:0;pointer-events:none;transform:scale(.55)}
+.intro-smoke:before,.intro-smoke:after{content:"";position:absolute;inset:0;background:
+radial-gradient(ellipse at 50% 54%,#b58adfdd 0 8%,transparent 34%),
+radial-gradient(ellipse at 34% 58%,#8053b8dd 0 12%,transparent 38%),
+radial-gradient(ellipse at 67% 47%,#c6a3e9cc 0 11%,transparent 36%),
+radial-gradient(ellipse at 50% 72%,#59347ecc 0 17%,transparent 46%),
+radial-gradient(ellipse at 20% 42%,#8b62c2aa 0 12%,transparent 40%) ;
+filter:blur(22px);animation:smokeDrift 3.5s ease-in-out infinite alternate}
+.intro-smoke:after{transform:rotate(28deg) scale(1.2);opacity:.7;animation-duration:4.5s;animation-direction:alternate-reverse}
+.intro-screen.opening .intro-smoke{opacity:1;transform:scale(1.5);transition:opacity .35s ease,transform 3s ease}
+@keyframes smokeDrift{from{translate:-5% 4%;scale:.92}to{translate:6% -5%;scale:1.12}}
+.intro-screen.reveal .intro-smoke{opacity:0;transition:opacity 1.2s ease}
+@media(max-width:420px){.intro-invite{height:min(450px,68vh);min-height:370px}.intro-hint{bottom:28px}}
+@media(prefers-reduced-motion:reduce){.intro-invite,.intro-screen,.intro-smoke,.intro-hint{transition:none!important;animation:none!important}}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .art::before{content:"";position:absolute;left:0;right:0;height:var(--h);background:var(--img) center/cover no-repeat;-webkit-mask-image:linear-gradient(transparent,#000 30%);mask-image:linear-gradient(transparent,#000 30%)}
 .hero{--img:url(assets/Portada.jpg);--h:60%}.hero::before{bottom:0}
@@ -98,6 +130,20 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
 </nav>
 <button class="music-fab" id="musicToggle" aria-label="Reproducir música"><svg><use href="#note"/></svg></button>
 <audio id="bgMusic" loop preload="auto"><source src="assets/m%C3%BAsica.mp3" type="audio/mpeg"></audio>
+<div class="intro-screen" id="introScreen">
+  <div class="intro-stars" aria-hidden="true"></div>
+  <button class="intro-invite" id="openInvitation" type="button" aria-label="Abrir la invitación de Rocío">
+    <span class="intro-sub">Una noche mágica</span>
+    <span class="intro-rule">✧ ❧ ✧</span>
+    <span class="intro-title">Mis XV Años</span>
+    <span class="intro-seal" aria-hidden="true">R</span>
+    <span class="intro-title">Rocío</span>
+    <span class="intro-rule">❧ ✧ ❧</span>
+    <span class="intro-sub">19 · 12 · 2026</span>
+  </button>
+  <span class="intro-hint">Tocá la carta para abrirla</span>
+  <div class="intro-smoke" aria-hidden="true"></div>
+</div>
 
 <main>
 <section class="night hero art" id="inicio" data-sky="16">
@@ -264,14 +310,22 @@ input,select,textarea{width:100%;padding:14px;border:1px solid #cdb7e2;border-ra
     if (audio.paused) { userPaused = false; if (!(await start())) alert('No se pudo reproducir assets/musica.mp3'); }
     else { userPaused = true; audio.pause(); setUI(false); }
   };
-  // Arranca sola al abrir; si el navegador la bloquea, suena con el primer toque en la pantalla.
-  start().then((ok) => {
-    if (ok) return;
-    const unlock = (e) => {
-      if (userPaused || fab.contains(e.target)) return;
-      start().then((done) => { if (done) ['pointerdown', 'touchend', 'click', 'keydown'].forEach((t) => document.removeEventListener(t, unlock, true)); });
-    };
-    ['pointerdown', 'touchend', 'click', 'keydown'].forEach((t) => document.addEventListener(t, unlock, true));
+  // La música comienza con el mismo gesto que abre la carta, compatible con las políticas del navegador.
+  const introScreen = $('introScreen');
+  const openInvitation = $('openInvitation');
+  document.body.classList.add('intro-lock');
+  let introStarted = false;
+  openInvitation.addEventListener('click', async () => {
+    if (introStarted) return;
+    introStarted = true;
+    start();
+    introScreen.classList.add('opening');
+    window.setTimeout(() => introScreen.classList.add('reveal'), 2100);
+    window.setTimeout(() => {
+      introScreen.classList.add('done');
+      document.body.classList.remove('intro-lock');
+      window.setTimeout(() => introScreen.remove(), 1100);
+    }, 3900);
   });
 
   // Linternas y flores decorativas
